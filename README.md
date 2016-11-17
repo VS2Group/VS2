@@ -24,17 +24,19 @@ Als Team von vier Informatik-Studenten entwickeln wir einen Twitter-Klon, der ge
     git commit -A -m "Kurze Beschreibung deiner Veränderung 2"
     git push
 ```
-4\. Erstelle einen Pull Request über Github.
+4\. Erstelle einen **Pull Request** über Github.
 
-5\. Warte auf ein Code Review deiner Teamkollegen und passe dein Feature entsprechend an. (Wiederholend)
+5\. Warte auf ein **Code Review** deiner Teamkollegen und passe dein Feature entsprechend an. (Wiederholend)
 ```
     git add src/x.java
     git commit -A -m "Code ist jetzt Checkstyle-konform!"
     git push
 ```
-6\. Merge dein Feature über Github ins Projekt.
+6\. **Merge** dein Feature über Github ins Projekt.
 
 7\. Ist dein Feature damit beendet? Dann darfst du den Branch jetzt löschen.
+
+Mehr Infos zum **Feature Branch Workflow** findest du auf: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 
 \**Gilt nur für Team-Mitglieder. Als Außenstehender kannst du leider nicht mithelfen, da dies ist eine Pflichtarbeit für unser Studium ist.*
 
