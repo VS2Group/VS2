@@ -1,8 +1,10 @@
 package de.vs2group.Service;
 
+import de.vs2group.Dao.FakeUserDaoImpl;
 import de.vs2group.Dao.UserDao;
 import de.vs2group.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.Collection;
 public class UserService {
 
 	@Autowired
+	@Qualifier("fakeData")
 	private UserDao userDao;
 
 	public Collection<User> getAllUsers() {
