@@ -2,7 +2,7 @@ body {
     padding-top: 90px;
 }
 .panel-login {
-    border-color: #ccc;
+	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -22,7 +22,7 @@ body {
 	-moz-transition: all 0.1s linear;
 	transition: all 0.1s linear;
 }
-.panel-login>.panel-heading .active{
+.panel-login>.panel-heading a.active{
 	color: #029f5b;
 	font-size: 18px;
 }
