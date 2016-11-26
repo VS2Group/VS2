@@ -21,8 +21,15 @@ public class SignInController {
 	@RequestMapping(value = {"", "/"}, method=RequestMethod.GET)
 	public String showSignIn(Model model) {
 		//model.addAttribute("signInData", new SignInData());
-		return "signin_signup";
+		return "signin";
 	}
+	
+	@RequestMapping(value = "/signup", method=RequestMethod.GET)
+	public String showSignUp(Model model) {
+		//model.addAttribute("signInData", new SignInData());
+		return "signup";
+	}
+	
 	/*
 	@RequestMapping(value = {"", "/"}, method=RequestMethod.POST)
 	public String processSignIn(

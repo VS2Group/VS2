@@ -18,23 +18,23 @@ public class SignUpController {
 			
 	@RequestMapping(value = {"", "/"}, method=RequestMethod.GET)
 	public String showSignUp(Model model) {
-		//model.addAttribute("signUpData", new SignUpData());
+		model.addAttribute("signUpData", new SignUpData());
 		return "signup";
 	}
-	/*
+	
 	@RequestMapping(value = {"", "/"}, method=RequestMethod.POST)
 	public String processSignUp(@ModelAttribute SignUpData signUpData, Model model) {
 		model.addAttribute("signUpData", signUpData);
 		
-		try{
+		/*try{
 			UserFactory.createUser(redis, signUpData.getUsername(), signUpData.getPassword());	
 			return "redirect:/signin";
 		}
 		catch(UserException e){
 			signUpData.setUserException(e);
-		}
+		}*/
 			
 		return "signup";
 	}
-	*/
+	
 }
