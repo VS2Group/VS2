@@ -1,13 +1,13 @@
-package de.hska.exablog;
+package de.hska.exablog.frontend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class SpringWebApplication {
+public class FrontendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringWebApplication.class, args);
+		SpringApplication.run(de.hska.exablog.datenbank.DatenbankApplication.class, args);
 	}
 }

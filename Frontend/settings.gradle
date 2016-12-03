@@ -1,1 +1,3 @@
-rootProject.name = 'UI'
+rootProject.name = 'Frontend'
+include ':Datenbank'
+project(':Datenbank').projectDir = new File(settingsDir, '../Datenbank')

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UI.iml" filepath="$PROJECT_DIR$/.idea/modules/UI.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UI_main.iml" filepath="$PROJECT_DIR$/.idea/modules/UI_main.iml" group="UI" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UI_test.iml" filepath="$PROJECT_DIR$/.idea/modules/UI_test.iml" group="UI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1420455818/Datenbank.iml" filepath="$PROJECT_DIR$/.idea/modules/1420455818/Datenbank.iml" group="Datenbank" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1420455818/Datenbank_main.iml" filepath="$PROJECT_DIR$/.idea/modules/1420455818/Datenbank_main.iml" group="Datenbank" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1420455818/Datenbank_test.iml" filepath="$PROJECT_DIR$/.idea/modules/1420455818/Datenbank_test.iml" group="Datenbank" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Frontend.iml" filepath="$PROJECT_DIR$/.idea/modules/Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Frontend_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Frontend_main.iml" group="Frontend" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Frontend_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Frontend_test.iml" group="Frontend" />
     </modules>
   </component>
 </project>

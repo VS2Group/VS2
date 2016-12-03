@@ -1,5 +1,6 @@
-package de.hska.exablog.ui;
+package de.hska.exablog.frontend.Controller;
 
+import de.hska.exablog.datenbank.Entity.SignUpData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
