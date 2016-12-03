@@ -17,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 group = 'de.hska.exablog'
 version = '0.0.1-SNAPSHOT'
 
-description = """UI"""
+description = """Frontend"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -34,7 +34,7 @@ repositories {
 
 }
 dependencies {
-    compile files('../Datenbank/build/libs/datenbank-0.0.1-SNAPSHOT.jar')
+
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'1.3.3.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.3.3.RELEASE'
@@ -45,4 +45,6 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.3.3.RELEASE') {
 exclude(module: 'commons-logging')
     }
+
+    compile project(':Datenbank')
 }
