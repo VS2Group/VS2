@@ -1,4 +1,4 @@
-package de.hska.exablog.web;
+package de.hska.exablog.ui;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

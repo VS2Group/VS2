@@ -1,4 +1,4 @@
-package de.hska.exablog.web;
+package de.hska.exablog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package de.hska.exablog.web;
+package de.hska.exablog.ui;
 
 import org.omg.CORBA.UserException;
 

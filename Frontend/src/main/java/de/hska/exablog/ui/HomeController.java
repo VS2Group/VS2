@@ -1,4 +1,4 @@
-package de.hska.exablog.web;
+package de.hska.exablog.ui;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
