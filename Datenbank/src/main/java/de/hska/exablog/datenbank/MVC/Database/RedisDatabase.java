@@ -19,6 +19,8 @@ public class RedisDatabase {
 	private HashOperations<String, String, String> userDataOps;
 	private SetOperations<String, String> allUsersOps;
 
+	private ValueOperations<String, String> sessionUserOps;
+
 	private HashOperations<String, String, String> postDataOps;
 	private SetOperations<String, String> userPostsOps;
 	private SetOperations<String, String> latestPostsOps;
@@ -44,6 +46,8 @@ public class RedisDatabase {
 		userFollowedOps = stringTemplate.opsForSet();
 		registeredLoginsOps = stringTemplate.opsForHash();
 		currentLoginsOps = stringTemplate.opsForValue();
+		sessionUserOps = stringTemplate.opsForValue();
+
 		this.postIDOps = new RedisAtomicLong("postid", stringTemplate.getConnectionFactory());
 	}
 
@@ -90,5 +94,9 @@ public class RedisDatabase {
 
 	public StringRedisTemplate getStringRedisTemplate() {
 		return stringRedisTemplate;
+	}
+
+	public ValueOperations<String, String> getSessionUserOps() {
+		return sessionUserOps;
 	}
 }

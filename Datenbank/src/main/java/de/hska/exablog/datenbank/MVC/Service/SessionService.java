@@ -14,9 +14,13 @@ public class SessionService {
 
 	@Autowired
 	@Qualifier("RedisDatabase")
-	private ISessionDao loginSessionDao;
+	private ISessionDao sessionDao;
 
 	public User validateSession(String sessionId) {
-		return loginSessionDao.validateSession(sessionId);
+		return sessionDao.validateSession(sessionId);
+	}
+
+	public void registerSession(String sessionId, String username) {
+		sessionDao.registerSession(sessionId, username);
 	}
 }

@@ -7,4 +7,6 @@ import de.hska.exablog.datenbank.MVC.Entity.User;
  */
 public interface ISessionDao {
 	User validateSession(String sessionId);
+
+	void registerSession(String sessionId, String username);
 }

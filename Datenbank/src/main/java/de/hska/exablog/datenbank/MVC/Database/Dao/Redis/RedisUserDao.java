@@ -2,6 +2,7 @@ package de.hska.exablog.datenbank.MVC.Database.Dao.Redis;
 
 import de.hska.exablog.datenbank.Config.RedisConfig;
 import de.hska.exablog.datenbank.Exceptions.AlreadyExistsException;
+import de.hska.exablog.datenbank.Exceptions.DoesNotExistException;
 import de.hska.exablog.datenbank.MVC.Database.Dao.IUserDao;
 import de.hska.exablog.datenbank.MVC.Database.RedisDatabase;
 import de.hska.exablog.datenbank.MVC.Entity.User;
@@ -45,7 +46,7 @@ public class RedisUserDao implements IUserDao {
 		String userKey = "user:" + username;
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new AlreadyExistsException("The User " + username + " does not exist.");
+			throw new DoesNotExistException("The User " + username + " does not exist.");
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
@@ -67,7 +68,7 @@ public class RedisUserDao implements IUserDao {
 		String userKey = "user:" + user.getUsername();
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new AlreadyExistsException("The User " + user.getUsername() + " does not exist.");
+			throw new DoesNotExistException("The User " + user.getUsername() + " does not exist.");
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);

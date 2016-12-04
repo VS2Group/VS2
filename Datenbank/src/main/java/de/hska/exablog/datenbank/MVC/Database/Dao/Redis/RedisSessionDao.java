@@ -4,6 +4,7 @@ import de.hska.exablog.datenbank.Config.RedisConfig;
 import de.hska.exablog.datenbank.MVC.Database.Dao.ISessionDao;
 import de.hska.exablog.datenbank.MVC.Database.RedisDatabase;
 import de.hska.exablog.datenbank.MVC.Entity.User;
+import de.hska.exablog.datenbank.MVC.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -20,21 +21,29 @@ public class RedisSessionDao implements ISessionDao {
 	@Autowired
 	private RedisDatabase database;
 
+	@Autowired
+	private UserService userService;
+
 	@Override
 	public User validateSession(String sessionId) {
 		String simpleLoginTokenKey = "session:" + sessionId;
-		if (database.getCurrentLoginsOps().get(simpleLoginTokenKey) == null) {
+
+
+		String username = database.getSessionUserOps().get(simpleLoginTokenKey);
+		if (username == null) {
 			return null;
 		}
 
-		database.getStringRedisTemplate()
-				.expire(simpleLoginTokenKey, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
-		// reset session timeout, since session still exists
+		// reset session timeout
+		registerSession(sessionId, username);
 
+		return userService.getUserByName(username);
+	}
 
-		String loginKey = "login:" + user.getUsername();
-		return database.getRegisteredLoginsOps()
-				.get(loginKey, "password")
-				.equals(user.getPassword());
+	@Override
+	public void registerSession(String sessionId, String username) {
+		String key = "session:" + sessionId;
+
+		database.getSessionUserOps().set(key, username, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
 	}
 }

@@ -19,8 +19,13 @@ public class SessionController {
 	@Autowired
 	private SessionService sessionService;
 
-	@RequestMapping(value="/validate/{sessionid}", method = RequestMethod.GET)
+	@RequestMapping(value="/{sessionid}", method = RequestMethod.GET)
 	public User validateSession(@PathVariable("sessionid") String sessionId) {
 		return sessionService.validateSession(sessionId);
+	}
+
+	@RequestMapping(value="/{sessionid}/{username}", method = RequestMethod.GET)
+	public void registerSession(@PathVariable("sessionid") String sessionId, @PathVariable("username") String username) {
+		sessionService.registerSession(sessionId, username);
 	}
 }
