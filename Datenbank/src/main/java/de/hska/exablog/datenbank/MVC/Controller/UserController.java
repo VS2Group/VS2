@@ -34,7 +34,7 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void insertStudent(@RequestBody User user){
-		userService.insertUser(user);
+	public User insertUser(@RequestBody User user) {
+		return userService.insertUser(user);
 	}
 }

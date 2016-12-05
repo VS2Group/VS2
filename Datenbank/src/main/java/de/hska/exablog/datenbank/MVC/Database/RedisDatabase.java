@@ -1,7 +1,6 @@
 package de.hska.exablog.datenbank.MVC.Database;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository;
  * @author ehx-v1
  */
 @Repository
-@Qualifier("RedisDatabase")
 public class RedisDatabase {
 
 	private HashOperations<String, String, String> userDataOps;

@@ -1,13 +1,19 @@
 package de.hska.exablog.datenbank.MVC.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Angelo on 03.12.2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Post {
 	private long postID;
-	private String content;
+	private String content = "";
 	private User user;
 	private long timestamp;
+
+	public Post() {
+	}
 
 	public Post(long id, String content, User user, long timestamp) {
 		this.postID = id;

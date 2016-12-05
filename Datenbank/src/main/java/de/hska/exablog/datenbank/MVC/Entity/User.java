@@ -1,15 +1,22 @@
 package de.hska.exablog.datenbank.MVC.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Angelo on 03.12.2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
-	private String username;
-	private String firstName;
-	private String lastName;
-	private String password;
-	private String backupCredentialQuestion;
-	private String backupCredentialAnswer;
+
+	private String username = "";
+	private String password = "";
+	private String firstName = "";
+	private String lastName = "";
+	private String backupCredentialQuestion = "";
+	private String backupCredentialAnswer = "";
+
+	public User() {
+	}
 
 	public User(String username, String password, String firstName, String lastName, String backupCredentialQuestion, String backupCredentialAnswer) {
 		this.username = username;
@@ -18,6 +25,10 @@ public class User {
 		this.password = password;
 		this.backupCredentialQuestion = backupCredentialQuestion;
 		this.backupCredentialAnswer = backupCredentialAnswer;
+	}
+
+	static public Builder getBuilder() {
+		return new Builder();
 	}
 
 	public String getBackupCredentialQuestion() {
@@ -34,10 +45,6 @@ public class User {
 
 	public void setBackupCredentialAnswer(String backupCredentialAnswer) {
 		this.backupCredentialAnswer = backupCredentialAnswer;
-	}
-
-	static public Builder getBuilder() {
-		return new Builder();
 	}
 
 	public String getUsername() {

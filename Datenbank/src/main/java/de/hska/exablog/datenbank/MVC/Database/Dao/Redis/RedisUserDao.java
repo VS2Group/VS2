@@ -88,7 +88,7 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public void insertUser(User user) {
+	public User insertUser(User user) {
 		String userKey = "user:" + user.getUsername();
 
 		if (database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
@@ -109,6 +109,15 @@ public class RedisUserDao implements IUserDao {
 		String simpleLoginToken = user.getUsername() + ":" + user.getFirstName() + ":" + user.getLastName();
 
 		database.getCurrentLoginsOps().set(simpleLoginTokenKey, simpleLoginToken, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+
+		return User.getBuilder()
+				.setUsername(user.getUsername())
+				.setFirstName(user.getFirstName())
+				.setLastName(user.getLastName())
+				.setPassword(user.getPassword())
+				.setBackupCredentialAnswer(user.getBackupCredentialAnswer())
+				.setBackupCredentialQuestion(user.getBackupCredentialQuestion())
+				.build();
 	}
 
 	@Override

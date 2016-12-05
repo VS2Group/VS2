@@ -1,12 +1,9 @@
 package de.hska.exablog.datenbank.MVC.Controller;
 
-import de.hska.exablog.datenbank.MVC.Database.Dao.ITimelineDao;
 import de.hska.exablog.datenbank.MVC.Entity.Timeline;
-import de.hska.exablog.datenbank.MVC.Entity.User;
 import de.hska.exablog.datenbank.MVC.Service.TimelineService;
 import de.hska.exablog.datenbank.MVC.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +27,7 @@ public class TimelineController {
 		return timelineService.getGlobalTimeline();
 	}
 
-	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/{username}", method = RequestMethod.GET)
 	public Timeline getPersonalTimeline(@PathVariable("username") String username) {
 		return timelineService.getPersonalTimeline(userService.getUserByName(username));
 	}

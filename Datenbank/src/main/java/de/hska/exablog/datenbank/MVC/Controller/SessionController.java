@@ -1,12 +1,11 @@
 package de.hska.exablog.datenbank.MVC.Controller;
 
+import de.hska.exablog.datenbank.MVC.Entity.Session;
 import de.hska.exablog.datenbank.MVC.Entity.User;
 import de.hska.exablog.datenbank.MVC.Service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Angelo on 04.12.2016.
@@ -24,8 +23,14 @@ public class SessionController {
 		return sessionService.validateSession(sessionId);
 	}
 
-	@RequestMapping(value="/{sessionid}/{username}", method = RequestMethod.GET)
-	public void registerSession(@PathVariable("sessionid") String sessionId, @PathVariable("username") String username) {
-		sessionService.registerSession(sessionId, username);
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Session registerSession(@RequestBody Session session) {
+		return sessionService.registerSession(session.getSessionId(), session.getUser().getUsername());
 	}
+
+	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void removeSession(@RequestBody Session session) {
+		sessionService.removeSession(session.getSessionId());
+	}
+
 }

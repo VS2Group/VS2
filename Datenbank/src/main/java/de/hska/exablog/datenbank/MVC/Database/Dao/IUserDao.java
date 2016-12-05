@@ -11,7 +11,8 @@ public interface IUserDao {
 	User getUserByName(String username);
 	void removeUserByName(String username);
 	void updateUser(User user);
-	void insertUser(User user);
+
+	User insertUser(User user);
 	Collection<User> getFollowed(User user);
 	Iterable<User> getFollowers(User user);
 

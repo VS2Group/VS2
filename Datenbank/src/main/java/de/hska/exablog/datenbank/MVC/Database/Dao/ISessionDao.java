@@ -1,5 +1,6 @@
 package de.hska.exablog.datenbank.MVC.Database.Dao;
 
+import de.hska.exablog.datenbank.MVC.Entity.Session;
 import de.hska.exablog.datenbank.MVC.Entity.User;
 
 /**
@@ -8,5 +9,7 @@ import de.hska.exablog.datenbank.MVC.Entity.User;
 public interface ISessionDao {
 	User validateSession(String sessionId);
 
-	void registerSession(String sessionId, String username);
+	Session registerSession(String sessionId, String username);
+
+	void removeSession(String sessionId);
 }

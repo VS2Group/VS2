@@ -4,6 +4,7 @@ import de.hska.exablog.datenbank.MVC.Database.Dao.IPostDao;
 import de.hska.exablog.datenbank.MVC.Entity.Post;
 import de.hska.exablog.datenbank.MVC.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
 	@Autowired
+	@Qualifier("RedisDatabase")
 	IPostDao postDao;
 
 	public Post createPost(User user, String content) {

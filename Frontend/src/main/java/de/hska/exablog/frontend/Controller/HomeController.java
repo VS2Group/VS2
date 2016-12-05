@@ -1,46 +1,35 @@
 package de.hska.exablog.frontend.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-
+import de.hska.exablog.datenbank.MVC.Entity.User;
+import de.hska.exablog.frontend.Service.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 
+/**
+ * Created by Angelo on 05.12.2016.
+ */
 @Controller
-@RequestMapping(value = "exablogtimeline")
+@RequestMapping("")
 public class HomeController {
-	
-	/*@Autowired
-	private RedisTemplate<String, String> redis;
-	*/
-	
-	@RequestMapping(value = {"", "/"}, method=RequestMethod.GET)
-	public String showSignUp(Model model, HttpServletRequest req) {
-		
-		//User user = AccessRestriction.getUser(redis, req);
-		
-		//model.addAttribute("post", new Post());
-		//model.addAttribute("postContainer", PostFactory.getUserTimeline(redis, user));
-		return "exablogtimeline";
+
+	@Autowired
+	private SessionService sessionService;
+
+	@RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+	public String getHomePage(HttpSession session, Model model) {
+		User user = sessionService.validateSession(session.getId());
+
+		if (user != null) {    // User ist eingeloggt
+			return "redirect:/timeline";
+		}
+
+		// User ist noch nicht eingeloggt
+		return "redirect:/login";
 	}
-	
-	/*
-	@RequestMapping(value = {"", "/"}, method=RequestMethod.POST)
-	public String createNewPost(
-			@ModelAttribute Post post, 
-			Model model, 
-			HttpServletRequest req,
-			HttpServletResponse res) {
-		
-		User user = AccessRestriction.getUser(redis, req);
-		PostFactory.createPost(redis, user, post.getText());
-		
-		System.out.println(post.getText());		
-		
-		model.addAttribute("post", post);
-		model.addAttribute("postContainer", PostFactory.getUserTimeline(redis, user));
-		return "home";
-	}*/
+
 }

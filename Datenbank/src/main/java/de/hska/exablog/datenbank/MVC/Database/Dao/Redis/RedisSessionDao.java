@@ -3,6 +3,7 @@ package de.hska.exablog.datenbank.MVC.Database.Dao.Redis;
 import de.hska.exablog.datenbank.Config.RedisConfig;
 import de.hska.exablog.datenbank.MVC.Database.Dao.ISessionDao;
 import de.hska.exablog.datenbank.MVC.Database.RedisDatabase;
+import de.hska.exablog.datenbank.MVC.Entity.Session;
 import de.hska.exablog.datenbank.MVC.Entity.User;
 import de.hska.exablog.datenbank.MVC.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,17 @@ public class RedisSessionDao implements ISessionDao {
 	}
 
 	@Override
-	public void registerSession(String sessionId, String username) {
+	public Session registerSession(String sessionId, String username) {
 		String key = "session:" + sessionId;
 
 		database.getSessionUserOps().set(key, username, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+		return new Session(sessionId, userService.getUserByName(username), System.currentTimeMillis());
+	}
+
+	@Override
+	public void removeSession(String sessionId) {
+		String key = "session:" + sessionId;
+
+		database.getSessionUserOps().set(key, null, 0, TimeUnit.MINUTES);
 	}
 }

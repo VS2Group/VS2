@@ -30,8 +30,8 @@ public class UserService {
 		userDao.updateUser(user);
 	}
 
-	public void insertUser(User user) {
-		userDao.insertUser(user);
+	public User insertUser(User user) {
+		return userDao.insertUser(user);
 	}
 
 	Collection<User> getFollowed(User user) {

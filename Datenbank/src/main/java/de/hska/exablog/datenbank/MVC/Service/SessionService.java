@@ -1,6 +1,7 @@
 package de.hska.exablog.datenbank.MVC.Service;
 
 import de.hska.exablog.datenbank.MVC.Database.Dao.ISessionDao;
+import de.hska.exablog.datenbank.MVC.Entity.Session;
 import de.hska.exablog.datenbank.MVC.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,11 @@ public class SessionService {
 		return sessionDao.validateSession(sessionId);
 	}
 
-	public void registerSession(String sessionId, String username) {
-		sessionDao.registerSession(sessionId, username);
+	public Session registerSession(String sessionId, String username) {
+		return sessionDao.registerSession(sessionId, username);
+	}
+
+	public void removeSession(String sessionId) {
+		sessionDao.removeSession(sessionId);
 	}
 }
