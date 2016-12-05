@@ -1,0 +1,7 @@
+task execRedis {
+  doLast {
+    exec {
+      commandLine 'cmd', '/c', 'redis-server.exe'
+    }
+  }
+}

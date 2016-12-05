@@ -21,7 +21,7 @@ description = """Datenbank"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
 }
 
 jar {
@@ -36,13 +36,16 @@ repositories {
 
 }
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'1.3.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.3.3.RELEASE'
-    compile group: 'org.webjars', name: 'bootstrap', version:'3.3.4'
-    compile group: 'org.webjars', name: 'jquery', version:'2.1.4'
+    // https://mvnrepository.com/artifact/redis.clients/jedis
+    compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.3.3.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.3.3.RELEASE'
+    compile 'org.springframework.data:spring-data-redis'
+    compile group: 'org.webjars', name: 'bootstrap', version: '3.3.4'
+    compile group: 'org.webjars', name: 'jquery', version: '2.1.4'
     compile("org.springframework:spring-web")
     compile("com.fasterxml.jackson.core:jackson-databind")
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.3.3.RELEASE') {
-exclude(module: 'commons-logging')
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.3.3.RELEASE') {
+        exclude(module: 'commons-logging')
     }
 }

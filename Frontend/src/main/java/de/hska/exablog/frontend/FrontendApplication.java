@@ -10,4 +10,5 @@ public class FrontendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(de.hska.exablog.datenbank.DatenbankApplication.class, args);
 	}
+
 }
