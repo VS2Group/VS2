@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DB+Redis" type="Multirun" factoryName="Multirun" separateTabs="true" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="3">
+    <runConfiguration name="Redis" type="Gradle" />
+    <runConfiguration name="Datenbank App" type="Spring Boot" />
+    <method />
+  </configuration>
+</component>

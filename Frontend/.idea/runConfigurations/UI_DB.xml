@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="UI+DB" type="Multirun" factoryName="Multirun" singleton="true" separateTabs="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="true" delayTime="5">
+    <runConfiguration name="Datenbank App" type="Spring Boot" />
+    <runConfiguration name="Frontend App" type="Spring Boot" />
+    <method />
+  </configuration>
+</component>
