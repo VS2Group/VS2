@@ -5,3 +5,12 @@ task execRedis {
     }
   }
 }
+
+task stopRedis {
+  doLast {
+    exec {
+      commandLine 'cmd', '/c', 'Taskkill /IM redis-server.exe /F'
+    }
+  }
+}
+
