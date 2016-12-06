@@ -94,7 +94,7 @@
                         <div class="panel panel-default" id="panel-login">
                             <div class="panel-body">
                                 <h2 id="title-login">Login</h2>    
-                                <form th:action="@{/login}" th:object="${user}" method="post">
+                                <form action="#" th:action="@{/login}" th:object="${user}" method="post">
                                     <div class="form-group">
                                         <input type="text" th:field="*{username}" class="form-control" placeholder="Benutzername" required ="required" autofocus="autofocus"/>
                                     </div>
@@ -105,7 +105,7 @@
                                     <button type="register" class="btn pull-right">Löschen</button>
                                 </form>
                                    <br/>
-                                <span><a href:"registrieren.html">Noch kein Konto? Registrieren</a></span>
+                                <span><a href="@{/register}">Noch kein Konto? Registrieren</a></span>
                             </div>
                         </div>
                     </div>

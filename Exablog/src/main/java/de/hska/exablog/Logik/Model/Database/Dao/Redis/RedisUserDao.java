@@ -42,7 +42,7 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public void removeUserByName(String username) {
+	public void removeUserByName(String username) throws DoesNotExistException {
 		String userKey = "user:" + username;
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
@@ -63,7 +63,7 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(User user) throws DoesNotExistException {
 
 		String userKey = "user:" + user.getUsername();
 
@@ -88,7 +88,7 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public User insertUser(User user) {
+	public User insertUser(User user) throws AlreadyExistsException {
 		String userKey = "user:" + user.getUsername();
 
 		if (database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {

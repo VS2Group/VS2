@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Exablog+Redis" type="Multirun" factoryName="Multirun" singleton="true" separateTabs="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="true" delayTime="5">
+  <configuration default="false" name="Exablog+Redis" type="Multirun" factoryName="Multirun" activateToolWindowBeforeRun="false" singleton="true" separateTabs="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="true" delayTime="5">
     <runConfiguration name="Stop Redis" type="Gradle" />
     <runConfiguration name="Start Redis" type="Gradle" />
     <runConfiguration name="Exablog App" type="Spring Boot" />

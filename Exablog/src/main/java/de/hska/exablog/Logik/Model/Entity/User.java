@@ -8,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-	private String username = "";
-	private String password = "";
-	private String firstName = "";
-	private String lastName = "";
-	private String backupCredentialQuestion = "";
-	private String backupCredentialAnswer = "";
+	private String username;
+	private String password;
+	private String firstName;
+	private String lastName;
+	private String backupCredentialQuestion;
+	private String backupCredentialAnswer;
 
 	public User() {
 	}

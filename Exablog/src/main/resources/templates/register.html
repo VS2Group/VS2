@@ -12,15 +12,15 @@
         th:field="*{username}"  
         th:field="*{password}"  
 -->
-<!-- ====================================================== -->	
-<html lang="en">
+<!-- ====================================================== -->
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta charset="utf-8" />
 		<title>ExaBlog Registrieren</title>
 		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
 		
 <!-- ====================================================== -->	
 <!-- Bootstrap-Overwrite-->
@@ -93,12 +93,12 @@
                         <div class="panel panel-default" id="panel-login">
                             <div class="panel-body">
                                 <h2 id="title-login">Registrieren</h2>    
-                                <form th:action="@{/registrieren}" th:object="${userRegister}" method="POST">
+                                <form action="#" th:action="@{/register}" th:object="${user}" method="POST">
                                     <div class="form-group">
                                         <input type="text" th:field="*{username}" class="form-control"  placeholder="Benutzername" required="true" autofocus="true" />
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" th:field="*{password}" class="form-control" placeholder="Passwort"  placeholder="Passwort" required="true" />
+                                        <input type="password" th:field="*{password}" class="form-control" placeholder="Passwort" required="true" />
                                     </div>
                                     <button type="submit" class="btn btn-default">Registrieren</button>
                                     <button type="register" class="btn pull-right">Löschen</button>
