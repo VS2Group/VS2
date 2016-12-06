@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Datenbank_main" target="1.8" />
+      <module name="Datenbank_test" target="1.8" />
+      <module name="Exablog_main" target="1.8" />
+      <module name="Exablog_test" target="1.8" />
+      <module name="Frontend_main" target="1.8" />
+      <module name="Frontend_test" target="1.8" />
+      <module name="spring-web-demo_main" target="1.8" />
+      <module name="spring-web-demo_test" target="1.8" />
+      <module name="UI_main" target="1.8" />
+      <module name="UI_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
