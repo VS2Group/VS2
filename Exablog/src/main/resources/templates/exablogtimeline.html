@@ -26,7 +26,7 @@
       <p>th:text="${post.content}"></p>
 -->
 <!-- ====================================================== -->	
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -36,25 +36,10 @@
 		<link th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
 		<link th:href="@{/static/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 		<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-		<!-- <link href="/static/css/bootstrap.min.css" rel="stylesheet"> -->	
-		
-        <style>
-            body{   
-            background: url(../static/image/logback.png) no-repeat center center fixed; 
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            }
+		<!-- <link href="/static/css/bootstrap.min.css" rel="stylesheet"> -->
 
-            footer {
-              position:absolute;
-              bottom: 0px;
-              width: 100%;
-              height: 60px;
-              background-color: #222;
-            }
-        </style>
+        <link th:href="@{/css/exablog.css}" rel="stylesheet" media="screen" />
+
     </head>
 
 

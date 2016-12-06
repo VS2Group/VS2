@@ -79,7 +79,8 @@ public class User {
 		this.password = password;
 	}
 
-	static public class Builder {
+
+    static public class Builder {
 		private String username;
 		private String firstName;
 		private String lastName;

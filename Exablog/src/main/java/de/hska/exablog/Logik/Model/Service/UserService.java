@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Angelo on 04.12.2016.
@@ -44,4 +45,5 @@ public class UserService {
 	boolean toggleFollowing(User follower, User following) {
 		return userDao.toggleFollowing(follower, following);
 	}
+
 }

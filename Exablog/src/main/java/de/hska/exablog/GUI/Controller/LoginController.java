@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * Created by Angelo on 03.12.2016.
@@ -34,7 +35,7 @@ public class LoginController {
 		if (user != null) {    // User ist eingeloggt
 			return "redirect:/timeline";
 		}
-
+		model.addAttribute("user",new User());
 		return "login";
 	}
 
@@ -52,7 +53,7 @@ public class LoginController {
 			return "login";
 		}
 
-		if (foundUser.getPassword() != user.getPassword()) {
+		if (!Objects.equals(foundUser.getPassword(), user.getPassword())) {
 			//TODO: Fehlermeldung: Passwort falsch
 			return "login";
 		}
