@@ -44,6 +44,7 @@ public class SearchController {
 		ArrayList<User> users = userService.searchFor(searchterm);
 		model.addAttribute("results", users);
 		model.addAttribute("user", user);
+		model.addAttribute("searchterm", searchterm);
 
 		return "searchresults";
 	}
