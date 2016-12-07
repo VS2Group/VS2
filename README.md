@@ -41,13 +41,10 @@ Mehr Infos zum **Feature Branch Workflow** findest du auf: https://www.atlassian
 \**Gilt nur für Team-Mitglieder. Als Außenstehender kannst du leider nicht mithelfen, da dies ist eine Pflichtarbeit für unser Studium ist.*
 
 ### Projektstruktur
-- *doc/*   Enthält die Dokumentation des Projekts
-- *src/*   Enthält den Code
+- */doc/*   Enthält die Dokumentation des Projekts
+- */Exablog/*   Enthält das Intellij-Exablog-Projekt
+- */Redis/*   Enthält den Redis-Server
 
 ### Was brauche ich?
-- Eine IDE für Spring:
-    - Spring Tool Suite - [Informationen](https://spring.io/tools) - [Download Win 64-bit](http://download.springsource.com/release/STS/3.8.2.RELEASE/dist/e4.6/spring-tool-suite-3.8.2.RELEASE-e4.6.1-win32-x86_64.zip)
-    - IntelliJ
-    - Eclipse mit entsprechenden Plugins
-- Eine IDE für UML (optional)
-    - Visual Diagram Community Edition
+- IntelliJ
+- Visual Paradigm (Free edition)
