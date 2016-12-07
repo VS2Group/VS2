@@ -1,10 +1,7 @@
 package de.hska.exablog.Logik.Model.Database;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +13,7 @@ public class RedisDatabase {
 
 	private HashOperations<String, String, String> userDataOps;
 	private SetOperations<String, String> allUsersOps;
+	private ZSetOperations<String, String> allUsersSortedOps;
 
 	private ValueOperations<String, String> sessionUserOps;
 
@@ -37,6 +35,7 @@ public class RedisDatabase {
 		stringRedisTemplate = stringTemplate;
 		userDataOps = stringTemplate.opsForHash();
 		allUsersOps = stringTemplate.opsForSet();
+		allUsersSortedOps = stringTemplate.opsForZSet();
 		postDataOps = stringTemplate.opsForHash();
 		userPostsOps = stringTemplate.opsForSet();
 		latestPostsOps = stringTemplate.opsForSet();
@@ -96,5 +95,9 @@ public class RedisDatabase {
 
 	public ValueOperations<String, String> getSessionUserOps() {
 		return sessionUserOps;
+	}
+
+	public ZSetOperations<String, String> getAllUsersSortedOps() {
+		return allUsersSortedOps;
 	}
 }

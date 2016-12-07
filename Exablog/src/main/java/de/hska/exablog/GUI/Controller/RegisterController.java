@@ -62,7 +62,7 @@ public class RegisterController {
 			} catch (UsernameTooShortException e) {
 				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_TOO_SHORT);
 			} catch (UserDoesNotExistException e) {
-				e.printStackTrace();
+				throw new RuntimeException("An unexpected error occurred", e);
 			}
 		}
 		return "register";
