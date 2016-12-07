@@ -1,5 +1,6 @@
 package de.hska.exablog.GUI.Controller;
 
+import de.hska.exablog.GUI.Controller.Data.PostData;
 import de.hska.exablog.Logik.Model.Entity.User;
 import de.hska.exablog.Logik.Model.Service.SessionService;
 import de.hska.exablog.Logik.Model.Service.UserService;
@@ -42,6 +43,7 @@ public class SearchController {
 		}
 
 		ArrayList<User> users = userService.searchFor(searchterm);
+		model.addAttribute("postData", new PostData());
 		model.addAttribute("results", users);
 		model.addAttribute("user", user);
 		model.addAttribute("searchterm", searchterm);

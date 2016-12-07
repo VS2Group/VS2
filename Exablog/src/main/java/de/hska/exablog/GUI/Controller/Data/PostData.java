@@ -7,7 +7,6 @@ import de.hska.exablog.Logik.Model.Entity.Post;
  */
 public class PostData {
 	private Post post = Post.getBuilder().build();
-	private String comingfrom = "timeline";
 
 	public PostData() {
 	}
@@ -18,13 +17,5 @@ public class PostData {
 
 	public void setPost(Post post) {
 		this.post = post;
-	}
-
-	public String getComingfrom() {
-		return comingfrom;
-	}
-
-	public void setComingfrom(String comingfrom) {
-		this.comingfrom = comingfrom;
 	}
 }

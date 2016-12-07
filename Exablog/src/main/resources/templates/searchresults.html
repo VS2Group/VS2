@@ -92,15 +92,17 @@
                 <hr/>
                 <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.-->
-                <div class="form-group">
+                <form class="form-group" th:action="@{/posts}" th:object="${postData}" method="post"
+                      onsubmit="sendContent();">
                     <label for="comment"></label>
-                    <textarea class="form-control" rows="5" id="comment" maxlength="140"></textarea>
+                    <textarea class="form-control" rows="5" th:field="*{post.content}" id="comment"
+                              maxlength="140"></textarea>
                     <br/>
                     <button type="submit" class="btn-success btn-block btn-lg">posten</button>
                     <br/>
                     <button type="submit" class="btn-danger btn-block btn-md">abbrechen</button>
                     <br/>
-                </div>
+                </form>
             </div>
             <hr/>
 
