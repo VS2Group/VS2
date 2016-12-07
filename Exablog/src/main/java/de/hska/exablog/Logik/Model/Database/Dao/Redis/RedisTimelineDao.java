@@ -28,6 +28,9 @@ public class RedisTimelineDao implements ITimelineDao {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private RedisUserDao userDao;
+
 	@Override
 	public Timeline getGlobalTimeline() {
 
@@ -53,7 +56,7 @@ public class RedisTimelineDao implements ITimelineDao {
 	@Override
 	public Timeline getPersonalTimeline(User user) {
 		Set<String> postIds = this.getUserPostIds(user);
-		for (User followed : this.getFollowed(user)) {
+		for (User followed : userDao.getFollowed(user)) {
 			postIds.addAll(this.getUserPostIds(followed));
 		}
 
@@ -82,11 +85,6 @@ public class RedisTimelineDao implements ITimelineDao {
 	private Set<String> getUserPostIds(User user) {
 		String key = user.getUsername() + ":posts";
 		return database.getUserPostsOps().members(key);
-	}
-
-	public Collection<User> getFollowed(User user) {
-		String key = user.getUsername() + ":following";
-		return this.extractUsers(database.getUserFollowedOps().members(key));
 	}
 
 	private Set<User> extractUsers(Set<String> userNames) {
