@@ -86,16 +86,4 @@ public class RedisTimelineDao implements ITimelineDao {
 		String key = user.getUsername() + ":posts";
 		return database.getUserPostsOps().members(key);
 	}
-
-	private Set<User> extractUsers(Set<String> userNames) {
-		Set<User> users = new HashSet<>();
-		for (String userName : userNames) {
-			try {
-				users.add(userService.getUserByName(userName));
-			} catch (UserDoesNotExistException e) {
-				e.printStackTrace();
-			}
-		}
-		return users;
-	}
 }
