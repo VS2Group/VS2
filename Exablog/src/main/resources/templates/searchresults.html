@@ -66,15 +66,16 @@
                 </li>
 
             </ul>
-            <form class="navbar-form navbar-right">
+            <form class="navbar-form navbar-right" th:action="@{/search}" th:object="${string}">
                 <div class="form-group">
-                    <input type="text" class="form-control input-sm" placeholder="Suche nach Nutzern"/>
+                    <input type="text" th:name="searchterm" class="form-control input-sm"
+                           placeholder="Suche nach Nutzern"/>
                 </div>
                 <button type="submit" class="btn btn-default btn-sm">Suche</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Abmelden</a></li>
+                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Abmelden</a></li>
             </ul>
         </div>
     </div>
