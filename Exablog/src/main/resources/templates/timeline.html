@@ -64,15 +64,15 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Timelines <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Meine Timeline</a></li>
-                        <li><a href="#">ExaBlog Timeline</a></li>
+                        <li><a th:href="@{/timeline} + '/' + ${user.username}">Meine Timeline</a></li>
+                        <li><a th:href="@{/timeline}">ExaBlog Timeline</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Follow<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">ich folge</a></li>
-                        <li><a href="#">mir folgen</a></li>
+                        <li><a th:href="@{/following}">ich folge</a></li>
+                        <li><a th:href="@{/following-me}">mir folgen</a></li>
                     </ul>
                 </li>
 
