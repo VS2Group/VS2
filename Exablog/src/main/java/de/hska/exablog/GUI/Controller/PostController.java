@@ -51,7 +51,6 @@ public class PostController {
 
 
 			return "redirect:/timeline";
-			//return "redirect:/" + postData.getComingfrom();
 		}
 
 		return "redirect:/timeline";
