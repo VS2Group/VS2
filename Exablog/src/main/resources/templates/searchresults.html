@@ -110,7 +110,9 @@
         <div class="col-sm-8 col-md-8 col-lg-10">
             <div class="col-md-12" style="background-color:white; opacity:0.8;">
                 <div class="col-md-12">
-                    <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span> suche "f" </h1>
+                    <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <th:block th:text="'Suche &bdquo;' + ${searchterm} + '&ldquo;'"/>
+                    </h1>
                     <hr/>
                     <div class="row">
 
