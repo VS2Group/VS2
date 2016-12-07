@@ -53,6 +53,8 @@
                     <div class="panel-body">
                         <h2 id="title-login">Registrieren</h2>
                         <form action="#" th:action="@{/register}" th:object="${registerData}" method="POST">
+                            <div th:unless="${registerData.errorState} eq ''"
+                                 th:text="${registerData.errorState}"></div>
                             <div class="form-group">
                                 <input type="text" th:field="*{user.username}" class="form-control"
                                        placeholder="Benutzername" required="true" autofocus="true"/>

@@ -45,7 +45,7 @@ public class RegisterData {
 		public String toString() {
 			switch (this) {
 				case NO_ERROR:
-					return "Kein Fehler.";
+					return "";
 				case ERROR_USERNAME_IN_USE:
 					return "Fehler: Der Benutzername ist bereits in Verwendung.";
 				case ERROR_USERNAME_ILLEGAL_WHITESPACE:
