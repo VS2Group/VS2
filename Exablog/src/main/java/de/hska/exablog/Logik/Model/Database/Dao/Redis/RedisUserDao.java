@@ -43,11 +43,12 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
+	@Deprecated
 	public void removeUserByName(String username) throws UserDoesNotExistException {
 		String userKey = "user:" + username;
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new UserDoesNotExistException();
+			throw new UserDoesNotExistException(username, true);
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
@@ -69,10 +70,11 @@ public class RedisUserDao implements IUserDao {
 		String userKey = "user:" + user.getUsername();
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new UserDoesNotExistException();
+			throw new UserDoesNotExistException(user.getUsername(), false);
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
+		database.getAllUsersSortedOps().add(RedisConfig.KEY_FOR_SORTED_USERS, userKey, 0.0);
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
@@ -94,6 +96,7 @@ public class RedisUserDao implements IUserDao {
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
+		database.getAllUsersSortedOps().add(RedisConfig.KEY_FOR_SORTED_USERS, userKey, 0.0);
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
@@ -132,7 +135,7 @@ public class RedisUserDao implements IUserDao {
 			try {
 				users.add(getUserByName(userName));
 			} catch (UserDoesNotExistException e) {
-				e.printStackTrace();
+				e.printStackTrace(); // throw a wrapping uncaught exception?
 			}
 		}
 		return users;
