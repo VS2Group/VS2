@@ -41,7 +41,7 @@ public class TimelineController {
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("user", user);
 		model.addAttribute("timeline", timelineService.getGlobalTimeline());
-
+		model.addAttribute("timelineUser", User.getBuilder().build());
 		return "timeline";
 	}
 
