@@ -7,14 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Session {
-	private String sessionId = "";
+	private String sessionId;
 	private User user;
 	private long timestamp;
 
-	public Session() {
-	}
-
-	public Session(String sessionId, User user, long timestamp) {
+	private Session(String sessionId, User user, long timestamp) {
 		this.sessionId = sessionId;
 		this.user = user;
 		this.timestamp = timestamp;
@@ -37,12 +34,11 @@ public class Session {
 	}
 
 	public static class Builder {
-		private String sessionId;
-		private User user;
-		private long timestamp;
+		private String sessionId = "UNKNOWN";
+		private User user = User.getBuilder().build();
+		private long timestamp = System.currentTimeMillis();
 
 		public Builder() {
-
 		}
 
 		public Builder setSessionId(String sessionId) {

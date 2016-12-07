@@ -1,6 +1,7 @@
 package de.hska.exablog.Logik.Model.Database.Dao.Redis;
 
 import de.hska.exablog.Logik.Config.RedisConfig;
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.ITimelineDao;
 import de.hska.exablog.Logik.Model.Database.RedisDatabase;
 import de.hska.exablog.Logik.Model.Entity.Post;
@@ -34,12 +35,12 @@ public class RedisTimelineDao implements ITimelineDao {
 		Timeline globalTimeline = new Timeline();
 
 		for (String postId : postIds) {
-			if (globalTimeline.size() >= RedisConfig.TIMELINE_LIMIT) {
+			if (globalTimeline.getPosts().size() >= RedisConfig.TIMELINE_LIMIT) {
 				break;
 			}
 
 			String postKey = "post:" + postId;
-			globalTimeline.add(Post.getBuilder()
+			globalTimeline.getPosts().add(Post.getBuilder()
 					.setPostID(Long.parseLong(postId))
 					.setContent(database.getPostDataOps().get(postKey, "content"))
 					.setUsername(database.getPostDataOps().get(postKey, "username"))
@@ -62,12 +63,12 @@ public class RedisTimelineDao implements ITimelineDao {
 		Timeline personalTimeline = new Timeline();
 
 		for (String postId : postIdList) {
-			if (personalTimeline.size() >= RedisConfig.TIMELINE_LIMIT) {
+			if (personalTimeline.getPosts().size() >= RedisConfig.TIMELINE_LIMIT) {
 				break;
 			}
 
 			String postKey = "post:" + postId;
-			personalTimeline.add(Post.getBuilder()
+			personalTimeline.getPosts().add(Post.getBuilder()
 					.setPostID(Long.parseLong(postId))
 					.setUsername(database.getPostDataOps().get(postKey, "username"))
 					.setContent(database.getPostDataOps().get(postKey, "content"))
@@ -91,7 +92,11 @@ public class RedisTimelineDao implements ITimelineDao {
 	private Set<User> extractUsers(Set<String> userNames) {
 		Set<User> users = new HashSet<>();
 		for (String userName : userNames) {
-			users.add(userService.getUserByName(userName));
+			try {
+				users.add(userService.getUserByName(userName));
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
 		}
 		return users;
 	}

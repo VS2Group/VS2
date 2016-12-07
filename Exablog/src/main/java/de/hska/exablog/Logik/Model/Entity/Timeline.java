@@ -10,19 +10,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Timeline extends ArrayList<Post> {
+public class Timeline {
 
-	/**
-	 *
-	 */
-	//private static final long serialVersionUID = 3760009921889581657L;
-	public Timeline () {
-		super();
+	private ArrayList<Post> posts = new ArrayList<>();
+
+	public Timeline() {
 	}
 
-	public Timeline (Collection<Post> posts) {
-		this();
-		this.addAll(posts);
+	public Timeline(Collection<Post> posts) {
+		this.posts.addAll(posts);
+	}
+
+	public ArrayList<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(ArrayList<Post> posts) {
+		this.posts = posts;
 	}
 
 }

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <title>ExaBlog</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            background: url(image/logback.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 60px;
+            background-color: #222;
+        }
+    </style>
+</head>
+
+
+<body>
+
+<!-- Nav START-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color:#222;">
+                <img class="img-circle img-responsive" src="image/hipster.jpeg" width="100px" height="auto"
+                     style="border:6px solid #222;"/>
+                <!-- Fehler bei Smartphone Displaygröße-->
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+
+            <ul class="nav navbar-nav ">
+                <!-- <li class="active"><a href="#">Dash</a></li> -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Timelines <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/timeline/${user.username}}">Meine Timeline</a></li>
+                        <li><a th:href="@{/timeline}">ExaBlog Timeline</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Follow<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">ich folge</a></li>
+                        <li><a href="#">mir folgen</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" placeholder="Suche nach Nutzern"/>
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Suche</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Abmelden</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Nav END-->
+
+
+<br/><br/><br/><br/><br/><br/><br/>
+<div class="container-fluid">
+    <div class="row" style="margin:10px 10px 10px 10px;">
+
+        <div class="col-sm-4 col-md-4 col-lg-2">
+            <div class="col-md-12" style="background-color:white; opacity:0.8;">
+                <h2>neue Nachricht</h2>
+                <hr/>
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.-->
+                <div class="form-group">
+                    <label for="comment"></label>
+                    <textarea class="form-control" rows="5" id="comment" maxlength="140"></textarea>
+                    <br/>
+                    <button type="submit" class="btn-success btn-block btn-lg">posten</button>
+                    <br/>
+                    <button type="submit" class="btn-danger btn-block btn-md">abbrechen</button>
+                    <br/>
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+
+
+        <div class="col-sm-8 col-md-8 col-lg-10">
+            <div class="col-md-12" style="background-color:white; opacity:0.8;">
+                <div class="col-md-12">
+                    <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span> suche "f" </h1>
+                    <hr/>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <img src="image/p6.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Faby</h4>
+                                <span class="badge">folgen?</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <img src="image/p6.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">faby2</h4>
+                                <span class="badge">folgen?</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <img src="image/p5.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Felix</h4>
+                                <span class="badge">folgen?</span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <img src="image/p3.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Freddy</h4>
+                                <span class="badge">folgen?</span>
+                            </div>
+                        </div>
+
+                    </div><!--rowEND-->
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <img src="image/p4.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fishshishi</h4>
+                                <span class="badge">folgen?</span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="media-left">
+                                <div class="col-md-12"></div>
+                                <img src="image/p2.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fou753159</h4>
+                                <span class="badge" style="background:#3299CC;"> <span class="glyphicon glyphicon-star"
+                                                                                       aria-hidden="true"></span>&nbsp;ich folge</span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                            <div class="media-left">
+                                <div class="col-md-12"></div>
+                                <img src="image/p1.jpg" class="media-object" style="width:100px"/>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Forkbomb</h4>
+                                <span class="badge">folgen?</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12"></div>
+                        </div>
+                    </div><!--rowEND-->
+                    <br/>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap-JavaScript
+================================================== -->
+<!-- Am Ende des Dokuments platziert, damit Seiten schneller laden -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10-Anzeigefenster-Hack für Fehler auf Surface und Desktop-Windows-8 -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

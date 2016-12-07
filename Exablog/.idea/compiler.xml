@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Datenbank_main" target="1.8" />
-      <module name="Datenbank_test" target="1.8" />
       <module name="Exablog_main" target="1.8" />
       <module name="Exablog_test" target="1.8" />
-      <module name="Frontend_main" target="1.8" />
-      <module name="Frontend_test" target="1.8" />
-      <module name="spring-web-demo_main" target="1.8" />
-      <module name="spring-web-demo_test" target="1.8" />
-      <module name="UI_main" target="1.8" />
-      <module name="UI_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

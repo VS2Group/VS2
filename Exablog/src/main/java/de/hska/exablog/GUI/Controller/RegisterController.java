@@ -1,7 +1,12 @@
 package de.hska.exablog.GUI.Controller;
 
-import de.hska.exablog.Logik.Exception.AlreadyExistsException;
+import de.hska.exablog.GUI.Controller.Data.RegisterData;
+import de.hska.exablog.Logik.Exception.UserAlreadyExistsException;
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
+import de.hska.exablog.Logik.Exception.UsernameIllegalWhitespaceException;
+import de.hska.exablog.Logik.Exception.UsernameTooShortException;
 import de.hska.exablog.Logik.Model.Entity.User;
+import de.hska.exablog.Logik.Exception.PasswordTooShortException;
 import de.hska.exablog.Logik.Model.Service.SessionService;
 import de.hska.exablog.Logik.Model.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
@@ -30,36 +34,39 @@ public class RegisterController {
 		if (sessionService.validateSession(session.getId()) != null) {    // User ist eingeloggt
 			return "redirect:/timeline";
 		}
-		model.addAttribute("user",new User());
+		model.addAttribute("registerData", new RegisterData());
 		return "register";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String postRegister(@NotNull @ModelAttribute User user, @NotNull HttpSession session, @NotNull Model model) {
-
-		if (sessionService.validateSession(session.getId()) != null) {    // User ist eingeloggt
+	public String postRegister(@NotNull @ModelAttribute RegisterData registerData, @NotNull HttpSession session, @NotNull Model model) {
+		if (sessionService.validateSession(session.getId()) != null) {    // User ist noch eingeloggt
 			return "redirect:/timeline";
 		}
 
-		if (registerCredentialsSet(user)) {
-			try {
-				User registeredUser = userService.insertUser(user);
-				if (registeredUser != null) {
-					model.addAttribute("registeredUsernameMessage", String.format("User %s wurde registriert!", registeredUser.getUsername()));
-				}
-			} catch (AlreadyExistsException e) {
-				model.addAttribute("registeredUsernameMessage", String.format("Fehler: User %s existiert bereits!", user.getUsername()));
-			}
-		} else {
-			model.addAttribute("user", new User());
+		if (!model.containsAttribute("registerData")) {
+			model.addAttribute("registerData", new RegisterData());
 		}
 
+		if (registerData.isSubmitted()) {
+			try {
+				User registeredUser = userService.insertUser(registerData.getUser());
+				sessionService.registerSession(session.getId(), registeredUser.getUsername());
+				return "redirect:/timeline";
+			} catch (UserAlreadyExistsException e) {
+				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_IN_USE);
+			} catch (UsernameIllegalWhitespaceException e) {
+				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_ILLEGAL_WHITESPACE);
+			} catch (PasswordTooShortException e) {
+				registerData.setErrorState(RegisterData.ErrorState.ERROR_PASSWORD_TOO_SHORT);
+			} catch (UsernameTooShortException e) {
+				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_TOO_SHORT);
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
+		}
 		return "register";
 	}
 
-	private boolean registerCredentialsSet(@NotNull User user) {
-		return user.getPassword() != null && !user.getPassword().equals("")
-				&& user.getUsername() != null && !user.getUsername().equals("");
-	}
 
 }

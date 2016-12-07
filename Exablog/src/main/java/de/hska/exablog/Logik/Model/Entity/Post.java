@@ -12,10 +12,7 @@ public class Post {
 	private User user;
 	private long timestamp;
 
-	public Post() {
-	}
-
-	public Post(long id, String content, User user, long timestamp) {
+	private Post(long id, String content, User user, long timestamp) {
 		this.postID = id;
 		this.user = user;
 		this.timestamp = timestamp;
@@ -47,10 +44,10 @@ public class Post {
 	}
 
 	public static class Builder {
-		private long postID;
-		private String content;
-		private User user;
-		private long timestamp;
+		private long postID = -1;
+		private String content = "";
+		private User user = User.getBuilder().build();
+		private long timestamp = System.currentTimeMillis();
 
 		public Builder() {
 		}

@@ -12,39 +12,26 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private String backupCredentialQuestion;
-	private String backupCredentialAnswer;
+	private String imageUrl;
 
-	public User() {
-	}
-
-	public User(String username, String password, String firstName, String lastName, String backupCredentialQuestion, String backupCredentialAnswer) {
+	private User(String username, String password, String firstName, String lastName, String imageUrl) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
-		this.backupCredentialQuestion = backupCredentialQuestion;
-		this.backupCredentialAnswer = backupCredentialAnswer;
+		this.imageUrl = imageUrl;
 	}
 
 	static public Builder getBuilder() {
 		return new Builder();
 	}
 
-	public String getBackupCredentialQuestion() {
-		return backupCredentialQuestion;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setBackupCredentialQuestion(String backupCredentialQuestion) {
-		this.backupCredentialQuestion = backupCredentialQuestion;
-	}
-
-	public String getBackupCredentialAnswer() {
-		return backupCredentialAnswer;
-	}
-
-	public void setBackupCredentialAnswer(String backupCredentialAnswer) {
-		this.backupCredentialAnswer = backupCredentialAnswer;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public String getUsername() {
@@ -79,13 +66,18 @@ public class User {
 		this.password = password;
 	}
 
+
 	static public class Builder {
-		private String username;
-		private String firstName;
-		private String lastName;
-		private String password;
-		private String backupCredentialQuestion;
-		private String backupCredentialAnswer;
+		private String username = "";
+		private String firstName = "";
+		private String lastName = "";
+		private String password = "";
+		private String imageUrl = "/image/user.png";
+
+		public Builder setImageUrl(String imageUrl) {
+			this.imageUrl = imageUrl;
+			return this;
+		}
 
 		public Builder setUsername(String username) {
 			this.username = username;
@@ -107,24 +99,13 @@ public class User {
 			return this;
 		}
 
-		public Builder setBackupCredentialQuestion(String backupCredentialQuestion) {
-			this.backupCredentialQuestion = backupCredentialQuestion;
-			return this;
-		}
-
-		public Builder setBackupCredentialAnswer(String backupCredentialAnswer) {
-			this.backupCredentialAnswer = backupCredentialAnswer;
-			return this;
-		}
-
 		public User build() {
 			return new User(
 					username,
 					password,
 					firstName,
 					lastName,
-					backupCredentialQuestion,
-					backupCredentialAnswer);
+					imageUrl);
 		}
 	}
 }

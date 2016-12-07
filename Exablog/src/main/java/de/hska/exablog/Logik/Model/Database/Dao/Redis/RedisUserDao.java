@@ -1,8 +1,8 @@
 package de.hska.exablog.Logik.Model.Database.Dao.Redis;
 
 import de.hska.exablog.Logik.Config.RedisConfig;
-import de.hska.exablog.Logik.Exception.AlreadyExistsException;
-import de.hska.exablog.Logik.Exception.DoesNotExistException;
+import de.hska.exablog.Logik.Exception.UserAlreadyExistsException;
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.IUserDao;
 import de.hska.exablog.Logik.Model.Database.RedisDatabase;
 import de.hska.exablog.Logik.Model.Entity.User;
@@ -26,34 +26,35 @@ public class RedisUserDao implements IUserDao {
 	private RedisDatabase database;
 
 	@Override
-	public User getUserByName(String username) {
+	public User getUserByName(String username) throws UserDoesNotExistException {
 		String key = "user:" + username;
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, key)) {
-			return null;
+			throw new UserDoesNotExistException();
 		}
 
 		return User.getBuilder()
-				.setUsername(username)
+				.setUsername(database.getUserDataOps().get(key, "username"))
 				.setPassword(database.getUserDataOps().get(key, "password"))
 				.setFirstName(database.getUserDataOps().get(key, "firstname"))
 				.setLastName(database.getUserDataOps().get(key, "lastname"))
+				.setImageUrl(database.getUserDataOps().get(key, "imageurl"))
 				.build();
 	}
 
 	@Override
-	public void removeUserByName(String username) throws DoesNotExistException {
+	public void removeUserByName(String username) throws UserDoesNotExistException {
 		String userKey = "user:" + username;
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new DoesNotExistException("The User " + username + " does not exist.");
+			throw new UserDoesNotExistException();
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
-		database.getUserDataOps().delete(userKey, "username", "firstname", "lastname");
+		database.getUserDataOps().delete(userKey, "username", "firstname", "lastname", "imageurl");
 
 		String loginKey = "login:" + username;
-		database.getRegisteredLoginsOps().delete(loginKey, "password", "bucquestion", "bucanswer"); // TODO: encrypt password
+		database.getRegisteredLoginsOps().delete(loginKey, "password"); // TODO: encrypt password
 
 		String simpleLoginTokenKey = "session:" + username;
 
@@ -63,23 +64,20 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public void updateUser(User user) throws DoesNotExistException {
+	public void updateUser(User user) throws UserDoesNotExistException {
 
 		String userKey = "user:" + user.getUsername();
 
 		if (!database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new DoesNotExistException("The User " + user.getUsername() + " does not exist.");
+			throw new UserDoesNotExistException();
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
-
-		String loginKey = "login:" + user.getUsername();
-		database.getRegisteredLoginsOps().put(loginKey, "password", user.getPassword()); // TODO: encrypt password
-		database.getRegisteredLoginsOps().put(loginKey, "bucquestion", user.getBackupCredentialQuestion());
-		database.getRegisteredLoginsOps().put(loginKey, "bucanswer", user.getBackupCredentialAnswer());
+		database.getUserDataOps().put(userKey, "password", user.getPassword());
+		database.getUserDataOps().put(userKey, "imageurl", user.getImageUrl());
 
 		String simpleLoginTokenKey = "session:" + user.getUsername();
 		String simpleLoginToken = user.getUsername() + ":" + user.getFirstName() + ":" + user.getLastName();
@@ -88,22 +86,19 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public User insertUser(User user) throws AlreadyExistsException {
+	public User insertUser(User user) throws UserAlreadyExistsException {
 		String userKey = "user:" + user.getUsername();
 
 		if (database.getAllUsersOps().isMember(RedisConfig.KEY_FOR_ALL_USERS, userKey)) {
-			throw new AlreadyExistsException("The User " + user.getUsername() + " is already registered. Please choose a different name.");
+			throw new UserAlreadyExistsException();
 		}
 
 		database.getAllUsersOps().add(RedisConfig.KEY_FOR_ALL_USERS, userKey);
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
-
-		String loginKey = "login:" + user.getUsername();
-		database.getRegisteredLoginsOps().put(loginKey, "password", user.getPassword()); // TODO: encrypt password
-		database.getRegisteredLoginsOps().put(loginKey, "bucquestion", user.getBackupCredentialQuestion());
-		database.getRegisteredLoginsOps().put(loginKey, "bucanswer", user.getBackupCredentialAnswer());
+		database.getUserDataOps().put(userKey, "password", user.getPassword());
+		database.getUserDataOps().put(userKey, "imageurl", user.getImageUrl());
 
 		String simpleLoginTokenKey = "session:" + user.getUsername();
 		String simpleLoginToken = user.getUsername() + ":" + user.getFirstName() + ":" + user.getLastName();
@@ -115,8 +110,7 @@ public class RedisUserDao implements IUserDao {
 				.setFirstName(user.getFirstName())
 				.setLastName(user.getLastName())
 				.setPassword(user.getPassword())
-				.setBackupCredentialAnswer(user.getBackupCredentialAnswer())
-				.setBackupCredentialQuestion(user.getBackupCredentialQuestion())
+				.setImageUrl(user.getImageUrl())
 				.build();
 	}
 
@@ -135,7 +129,11 @@ public class RedisUserDao implements IUserDao {
 	private Set<User> extractUsers(Set<String> userNames) {
 		Set<User> users = new HashSet<>();
 		for (String userName : userNames) {
-			users.add(getUserByName(userName));
+			try {
+				users.add(getUserByName(userName));
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
 		}
 		return users;
 	}

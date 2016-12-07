@@ -1,6 +1,7 @@
 package de.hska.exablog.Logik.Model.Database.Dao.Redis;
 
 import de.hska.exablog.Logik.Config.RedisConfig;
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.ISessionDao;
 import de.hska.exablog.Logik.Model.Database.RedisDatabase;
 import de.hska.exablog.Logik.Model.Entity.Session;
@@ -35,24 +36,32 @@ public class RedisSessionDao implements ISessionDao {
 			return null;
 		}
 
-		// reset session timeout
-		registerSession(sessionId, username);
-
-		return userService.getUserByName(username);
+		try {
+			// reset session timeout
+			registerSession(sessionId, username);
+			return userService.getUserByName(username);
+		} catch (UserDoesNotExistException e) {
+			return null;
+		}
 	}
 
 	@Override
-	public Session registerSession(String sessionId, String username) {
+	public Session registerSession(String sessionId, String username) throws UserDoesNotExistException {
 		String key = "session:" + sessionId;
 
+		User user = userService.getUserByName(username);
+
 		database.getSessionUserOps().set(key, username, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
-		return new Session(sessionId, userService.getUserByName(username), System.currentTimeMillis());
+		return Session.getBuilder()
+				.setSessionId(sessionId)
+				.setUser(user)
+				.build();
 	}
 
 	@Override
 	public void removeSession(String sessionId) {
 		String key = "session:" + sessionId;
 
-		database.getSessionUserOps().set(key, null, 0, TimeUnit.MINUTES);
+		database.getSessionUserOps().getOperations().delete(key);
 	}
 }

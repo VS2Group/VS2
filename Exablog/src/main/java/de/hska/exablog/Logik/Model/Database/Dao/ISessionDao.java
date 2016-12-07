@@ -1,5 +1,6 @@
 package de.hska.exablog.Logik.Model.Database.Dao;
 
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Entity.Session;
 import de.hska.exablog.Logik.Model.Entity.User;
 
@@ -9,7 +10,7 @@ import de.hska.exablog.Logik.Model.Entity.User;
 public interface ISessionDao {
 	User validateSession(String sessionId);
 
-	Session registerSession(String sessionId, String username);
+	Session registerSession(String sessionId, String username) throws UserDoesNotExistException;
 
 	void removeSession(String sessionId);
 }

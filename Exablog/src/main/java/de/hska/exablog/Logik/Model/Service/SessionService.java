@@ -1,5 +1,6 @@
 package de.hska.exablog.Logik.Model.Service;
 
+import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.ISessionDao;
 import de.hska.exablog.Logik.Model.Entity.Session;
 import de.hska.exablog.Logik.Model.Entity.User;
@@ -21,7 +22,7 @@ public class SessionService {
 		return sessionDao.validateSession(sessionId);
 	}
 
-	public Session registerSession(String sessionId, String username) {
+	public Session registerSession(String sessionId, String username) throws UserDoesNotExistException {
 		return sessionDao.registerSession(sessionId, username);
 	}
 
