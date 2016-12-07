@@ -1,0 +1,22 @@
+h1{
+	color: lightgrey;
+}
+.container-login{
+	margin-top: 35%;
+}
+#panel-login{
+	background-color:rgba(0, 0, 0, 0.5);
+	border: black;
+}
+#logo {
+	font-size: 36px;
+	font-family:coolvetica;
+	color: white;
+	width: 115px;
+}
+#title-login{
+	color: white;
+}
+#nav{
+	background-color:rgba(0, 0, 0, 0.5);
+}

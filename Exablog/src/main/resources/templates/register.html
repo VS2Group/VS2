@@ -65,9 +65,10 @@
                             </div>
                             <input th:field="*{submitted}" name="submitted" type="hidden" value="true"/>
                             <button type="submit" class="btn btn-default">Registrieren</button>
-                            <button type="register" class="btn pull-right">Löschen</button>
+                            <button type="reset" class="btn pull-right">Löschen</button>
                         </form>
                         <br/>
+                        <span><a th:href="@{/login}">weiter zu Login</a></span>
                     </div>
                 </div>
             </div>
