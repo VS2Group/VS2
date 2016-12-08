@@ -32,31 +32,32 @@ public class RedisTimelineDao implements ITimelineDao {
 	private RedisUserDao userDao;
 
 	@Override
-	public Timeline getGlobalTimeline() {
+	public Timeline getGlobalTimeline(long start, long end) {
+		List<String> sortedPostsGlobal = database.getSortedPostsOps().range("sortedPostsGlobal", start, end);
 
-		Set<String> postIds = database.getLatestPostsOps().members(RedisConfig.KEY_FOR_LATEST_POSTS);
+		//Set<String> postIds = database.getLatestPostsOps().members(RedisConfig.KEY_FOR_LATEST_POSTS);
 		Timeline globalTimeline = new Timeline();
 
-		for (String postId : postIds) {
-			if (globalTimeline.getPosts().size() >= RedisConfig.TIMELINE_LIMIT) {
-				break;
-			}
-
+		for (String postId : sortedPostsGlobal) {
 			String postKey = "post:" + postId;
-			globalTimeline.getPosts().add(Post.getBuilder()
-					.setPostID(Long.parseLong(postId))
-					.setContent(database.getPostDataOps().get(postKey, "content"))
-					.setUsername(database.getPostDataOps().get(postKey, "username"))
-					.setTimestamp(Long.parseLong(database.getPostDataOps().get(postKey, "timestamp")))
-					.build());
+			try {
+				globalTimeline.getPosts().add(Post.getBuilder()
+						.setPostID(Long.parseLong(postId))
+						.setContent(database.getPostDataOps().get(postKey, "content"))
+						.setUser(userService.getUserByName(database.getPostDataOps().get(postKey, "username")))
+						.setTimestamp(new Date(Long.parseLong(database.getPostDataOps().get(postKey, "timestamp"))))
+						.build());
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
 		}
 		return globalTimeline;
 	}
 
 	@Override
-	public Timeline getPersonalTimeline(User user) {
+	public Timeline getPersonalTimeline(User user, long start, long end) {
 		Set<String> postIds = this.getUserPostIds(user);
-		for (User followed : userDao.getFollowed(user)) {
+		for (User followed : userDao.getFollowings(user)) {
 			postIds.addAll(this.getUserPostIds(followed));
 		}
 
@@ -71,12 +72,16 @@ public class RedisTimelineDao implements ITimelineDao {
 			}
 
 			String postKey = "post:" + postId;
-			personalTimeline.getPosts().add(Post.getBuilder()
-					.setPostID(Long.parseLong(postId))
-					.setUsername(database.getPostDataOps().get(postKey, "username"))
-					.setContent(database.getPostDataOps().get(postKey, "content"))
-					.setTimestamp(Long.parseLong(database.getPostDataOps().get(postKey, "timestamp")))
-					.build());
+			try {
+				personalTimeline.getPosts().add(Post.getBuilder()
+						.setPostID(Long.parseLong(postId))
+						.setUser(userService.getUserByName(database.getPostDataOps().get(postKey, "username")))
+						.setContent(database.getPostDataOps().get(postKey, "content"))
+						.setTimestamp(new Date(Long.parseLong(database.getPostDataOps().get(postKey, "timestamp"))))
+						.build());
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return personalTimeline;

@@ -53,22 +53,23 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Timelines <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/timeline} + '/' + ${user.username}">Meine Timeline</a></li>
+                        <li><a th:href="@{/timeline/personal}">Meine Timeline</a></li>
                         <li><a th:href="@{/timeline}">ExaBlog Timeline</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Follow<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/following}">ich folge</a></li>
-                        <li><a th:href="@{/following-me}">mir folgen</a></li>
+                        <li><a th:href="@{/followings}">ich folge</a></li>
+                        <li><a th:href="@{/followers}">mir folgen</a></li>
                     </ul>
                 </li>
 
             </ul>
-            <form class="navbar-form navbar-right">
+            <form class="navbar-form navbar-right" th:action="@{/search}" th:object="${string}">
                 <div class="form-group">
-                    <input type="text" class="form-control input-sm" placeholder="Suche nach Nutzern"/>
+                    <input type="text" th:name="searchterm" class="form-control input-sm"
+                           placeholder="Suche nach Nutzern"/>
                 </div>
                 <button type="submit" class="btn btn-default btn-sm">Suche</button>
             </form>
@@ -116,22 +117,23 @@
                         <th:block th:text="'Suche &bdquo;' + ${searchterm} + '&ldquo;'"/>
                     </h1>
                     <hr/>
+
                     <div class="row">
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" th:each="someresult : ${results}">
                             <div class="col-md-12"></div>
                             <div class="media-left">
-                                <img src="image/p6.jpg" class="media-object" style="width:100px"/>
+                                <img th:src="${someresult.imageUrl}" class="media-object" style="width:100px"/>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">Faby</h4>
+                                <h4 class="media-heading" th:text="${someresult.username}">Faby</h4>
                                 <span class="badge">folgen?</span>
                             </div>
 
                         </div>
 
 
-                        <div class="col-md-3">
+                        <!--<div class="col-md-3">
                             <div class="col-md-12"></div>
                             <div class="media-left">
                                 <img src="image/p6.jpg" class="media-object" style="width:100px"/>
@@ -167,10 +169,10 @@
                                 <span class="badge">folgen?</span>
                             </div>
                         </div>
-
+-->
                     </div><!--rowEND-->
 
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-md-3">
                             <div class="col-md-12"></div>
                             <div class="media-left">
@@ -190,8 +192,11 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">Fou753159</h4>
-                                <span class="badge" style="background:#3299CC;"> <span class="glyphicon glyphicon-star"
-                                                                                       aria-hidden="true"></span>&nbsp;ich folge</span>
+                                <span class="badge" style="background:#3299CC;">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true">
+
+                                    </span>&nbsp;ich folge
+                                </span>
                             </div>
                         </div>
 
@@ -210,7 +215,7 @@
                         <div class="col-md-3">
                             <div class="col-md-12"></div>
                         </div>
-                    </div><!--rowEND-->
+                    </div>--><!--rowEND-->
                     <br/>
 
 

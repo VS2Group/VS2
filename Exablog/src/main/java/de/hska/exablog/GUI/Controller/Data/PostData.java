@@ -7,8 +7,17 @@ import de.hska.exablog.Logik.Model.Entity.Post;
  */
 public class PostData {
 	private Post post = Post.getBuilder().build();
+	private String page = "/timeline";
 
 	public PostData() {
+	}
+
+	public String getPage() {
+		return page;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
 	}
 
 	public Post getPost() {

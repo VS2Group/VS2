@@ -3,6 +3,7 @@ package de.hska.exablog.GUI.Controller;
 import de.hska.exablog.GUI.Controller.Data.PostData;
 import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Entity.Session;
+import de.hska.exablog.Logik.Model.Entity.Timeline;
 import de.hska.exablog.Logik.Model.Entity.User;
 import de.hska.exablog.Logik.Model.Service.SessionService;
 import de.hska.exablog.Logik.Model.Service.TimelineService;
@@ -31,7 +32,7 @@ public class TimelineController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getTimeline(HttpSession session, Model model) {
+	public String getGlobalTimeline(HttpSession session, Model model) {
 		User user = sessionService.validateSession(session.getId());
 		if (user == null) {    // User ist eingeloggt
 			return "redirect:/login";
@@ -40,31 +41,23 @@ public class TimelineController {
 		model.addAttribute("timelinetype", "global");
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("user", user);
-		model.addAttribute("timeline", timelineService.getGlobalTimeline());
-		model.addAttribute("timelineUser", User.getBuilder().build());
+		Timeline globalTimeline = timelineService.getGlobalTimeline(0);
+		model.addAttribute("timeline", globalTimeline);
 		return "timeline";
 	}
 
-	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
-	public String getTimeline(@PathVariable("username") String username, HttpSession session, Model model) {
+	@RequestMapping(value = "/personal", method = RequestMethod.GET)
+	public String getPersonalTimeline(HttpSession session, Model model) {
 		User thisUser = sessionService.validateSession(session.getId());
 		if (thisUser == null) {    // User ist eingeloggt
 			return "redirect:/login";
 		}
 
-		User timelineUser = null;
-		try {
-			timelineUser = userService.getUserByName(username);
-		} catch (UserDoesNotExistException e) {
-			return "redirect:/timeline";
-		}
-
-
 		model.addAttribute("timelinetype", "private");
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("user", thisUser);
-		model.addAttribute("timeline", timelineService.getPersonalTimeline(timelineUser));
-		model.addAttribute("timelineUser", timelineUser);
+		Timeline personalTimeline = timelineService.getPersonalTimeline(thisUser, 0);
+		model.addAttribute("timeline", personalTimeline);
 
 		return "timeline";
 	}

@@ -38,20 +38,19 @@ public class RedisSessionDao implements ISessionDao {
 
 		try {
 			// reset session timeout
-			registerSession(sessionId, username);
-			return userService.getUserByName(username);
+			User user = userService.getUserByName(username);
+			registerSession(sessionId, user);
+			return user;
 		} catch (UserDoesNotExistException e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Session registerSession(String sessionId, String username) throws UserDoesNotExistException {
+	public Session registerSession(String sessionId, User user) throws UserDoesNotExistException {
 		String key = "session:" + sessionId;
 
-		User user = userService.getUserByName(username);
-
-		database.getSessionUserOps().set(key, username, RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+		database.getSessionUserOps().set(key, user.getUsername(), RedisConfig.SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
 		return Session.getBuilder()
 				.setSessionId(sessionId)
 				.setUser(user)

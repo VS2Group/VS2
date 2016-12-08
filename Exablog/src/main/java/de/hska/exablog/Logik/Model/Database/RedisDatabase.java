@@ -1,10 +1,7 @@
 package de.hska.exablog.Logik.Model.Database;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +10,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class RedisDatabase {
+
+	private final ListOperations<String, String> sortedPostsOps;
 
 	private HashOperations<String, String, String> userDataOps;
 	private SetOperations<String, String> allUsersOps;
@@ -36,13 +35,17 @@ public class RedisDatabase {
 	public RedisDatabase(StringRedisTemplate stringTemplate) {
 		stringRedisTemplate = stringTemplate;
 		userDataOps = stringTemplate.opsForHash();
-		allUsersOps = stringTemplate.opsForSet();
 		postDataOps = stringTemplate.opsForHash();
+		registeredLoginsOps = stringTemplate.opsForHash();
+
+		allUsersOps = stringTemplate.opsForSet();
 		userPostsOps = stringTemplate.opsForSet();
 		latestPostsOps = stringTemplate.opsForSet();
 		userFollowersOps = stringTemplate.opsForSet();
 		userFollowedOps = stringTemplate.opsForSet();
-		registeredLoginsOps = stringTemplate.opsForHash();
+
+		sortedPostsOps = stringTemplate.opsForList();
+
 		currentLoginsOps = stringTemplate.opsForValue();
 		sessionUserOps = stringTemplate.opsForValue();
 
@@ -96,5 +99,9 @@ public class RedisDatabase {
 
 	public ValueOperations<String, String> getSessionUserOps() {
 		return sessionUserOps;
+	}
+
+	public ListOperations<String, String> getSortedPostsOps() {
+		return sortedPostsOps;
 	}
 }

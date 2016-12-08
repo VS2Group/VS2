@@ -3,9 +3,11 @@ package de.hska.exablog.GUI.Controller;
 import de.hska.exablog.GUI.Controller.Data.Greeting;
 import de.hska.exablog.GUI.Controller.Data.Message;
 import de.hska.exablog.GUI.Controller.Data.PostData;
+import de.hska.exablog.Logik.Model.Entity.Post;
 import de.hska.exablog.Logik.Model.Entity.User;
 import de.hska.exablog.Logik.Model.Service.PostService;
 import de.hska.exablog.Logik.Model.Service.SessionService;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -36,6 +38,9 @@ public class PostController {
 		if (user == null) {    // User war noch eingeloggt
 			return "redirect:/login";
 		}
+
+		model.addAttribute("postData", new PostData());
+
 		return "redirect:/timeline";
 	}
 
@@ -47,18 +52,19 @@ public class PostController {
 		}
 
 		if (model.containsAttribute("postData")) {
-			postService.createPost(user, postData.getPost().getContent());
+			postData.getPost().setUser(user);
+			Post post = postService.createPost(user, postData.getPost().getContent());
 
 
-			return "redirect:/timeline";
+			return "redirect:" + postData.getPage();
 		}
 
 		return "redirect:/timeline";
 	}
 
-	@MessageMapping("/hello")
+	/*@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
 	public Greeting greeting(Message message) throws Exception {
 		return new Greeting("Hello, " + message.getContent() + "!");
-	}
+	}*/
 }

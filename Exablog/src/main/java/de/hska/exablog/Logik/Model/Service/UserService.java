@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Angelo on 04.12.2016.
@@ -88,20 +89,27 @@ public class UserService {
 
 	}
 
-	Collection<User> getFollowed(@NotNull User user) {
-		return userDao.getFollowed(user);
+	public Collection<User> getFollowings(@NotNull User user) {
+		return userDao.getFollowings(user);
 	}
 
-	Iterable<User> getFollowers(@NotNull User user) {
+	public Collection<User> getFollowers(@NotNull User user) {
 		return userDao.getFollowers(user);
 	}
 
-	boolean toggleFollowing(@NotNull User follower, @NotNull User following) {
-		return userDao.toggleFollowing(follower, following);
+	public void follow(User from, User to) {
+		userDao.follow(from, to);
 	}
 
-	public ArrayList<User> searchFor(String username) {
-		// TODO!!!
-		return new ArrayList<>();
+	public void unfollow(User from, User to) {
+		userDao.unfollow(from, to);
+	}
+
+	public boolean isFollowing(User from, User to) {
+		return userDao.isFollowing(from, to);
+	}
+
+	public List<User> searchForUsers(String username) {
+		return userDao.searchForUsers(username);
 	}
 }
