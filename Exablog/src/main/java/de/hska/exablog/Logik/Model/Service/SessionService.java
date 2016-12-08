@@ -2,6 +2,7 @@ package de.hska.exablog.Logik.Model.Service;
 
 import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.ISessionDao;
+import de.hska.exablog.Logik.Model.Database.Dao.IUserDao;
 import de.hska.exablog.Logik.Model.Entity.Session;
 import de.hska.exablog.Logik.Model.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,16 @@ public class SessionService {
 	@Qualifier("RedisDatabase")
 	private ISessionDao sessionDao;
 
+	@Autowired
+	@Qualifier("RedisDatabase")
+	private IUserDao userDao;
+
 	public User validateSession(String sessionId) {
 		return sessionDao.validateSession(sessionId);
 	}
 
-	public Session registerSession(String sessionId, String username) throws UserDoesNotExistException {
-		return sessionDao.registerSession(sessionId, username);
+	public Session registerSession(String sessionId, User user) throws UserDoesNotExistException {
+		return sessionDao.registerSession(sessionId, user);
 	}
 
 	public void removeSession(String sessionId) {

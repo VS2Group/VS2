@@ -8,5 +8,4 @@ import de.hska.exablog.Logik.Model.Entity.User;
  */
 public interface IPostDao {
 	Post createPost(User user, String content);
-	void deletePost(long postID);
 }

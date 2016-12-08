@@ -12,6 +12,7 @@ import de.hska.exablog.Logik.Model.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,16 +31,30 @@ public class RegisterController {
 	private SessionService sessionService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getRegister(@NotNull HttpSession session, @NotNull Model model) {
+	public String getRegister(@CookieValue(value = "oldSession", defaultValue = "") String oldSession,
+							  @NotNull HttpSession session, @NotNull Model model) {
 		if (sessionService.validateSession(session.getId()) != null) {    // User ist eingeloggt
 			return "redirect:/timeline";
 		}
+
+		User oldUser = sessionService.validateSession(oldSession);
+		if (oldUser != null) {
+			sessionService.removeSession(oldSession);
+			try {
+				sessionService.registerSession(session.getId(), oldUser);
+				return "redirect:/timeline";
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
+		}
+
 		model.addAttribute("registerData", new RegisterData());
 		return "register";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String postRegister(@NotNull @ModelAttribute RegisterData registerData, @NotNull HttpSession session, @NotNull Model model) {
+	public String postRegister(@CookieValue(value = "oldSession", defaultValue = "") String oldSession,
+							   @NotNull @ModelAttribute RegisterData registerData, @NotNull HttpSession session, @NotNull Model model) {
 		if (sessionService.validateSession(session.getId()) != null) {    // User ist noch eingeloggt
 			return "redirect:/timeline";
 		}
@@ -51,7 +66,8 @@ public class RegisterController {
 		if (registerData.isSubmitted()) {
 			try {
 				User registeredUser = userService.insertUser(registerData.getUser());
-				sessionService.registerSession(session.getId(), registeredUser.getUsername());
+				sessionService.registerSession(session.getId(), registeredUser);
+				oldSession = session.getId();
 				return "redirect:/timeline";
 			} catch (UserAlreadyExistsException e) {
 				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_IN_USE);

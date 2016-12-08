@@ -10,7 +10,7 @@ import de.hska.exablog.Logik.Model.Entity.User;
 public interface ISessionDao {
 	User validateSession(String sessionId);
 
-	Session registerSession(String sessionId, String username) throws UserDoesNotExistException;
+	Session registerSession(String sessionId, User user) throws UserDoesNotExistException;
 
 	void removeSession(String sessionId);
 }

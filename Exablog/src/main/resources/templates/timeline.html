@@ -64,15 +64,15 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Timelines <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/timeline} + '/' + ${user.username}">Meine Timeline</a></li>
+                        <li><a th:href="@{/timeline/personal}">Meine Timeline</a></li>
                         <li><a th:href="@{/timeline}">ExaBlog Timeline</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Follow<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/following}">ich folge</a></li>
-                        <li><a th:href="@{/following-me}">mir folgen</a></li>
+                        <li><a th:href="@{/followings}">ich folge</a></li>
+                        <li><a th:href="@{/followers}">mir folgen</a></li>
                     </ul>
                 </li>
 
@@ -123,8 +123,8 @@
         <div class="col-sm-8 col-md-8 col-lg-10">
             <div class="col-md-12" style="background-color:white; opacity:0.8;">
                 <div class="col-md-12">
-                    <h1 th:if="${timelinetype} == 'global'" th:text="'ExaBlog Timeline'"/>
-                    <h1 th:if="${timelinetype} == 'private'" th:text="${username} + '\'s Timeline'"/>
+                    <h1 th:if="${timelinetype} == 'global'">Exablog Timeline</h1>
+                    <h1 th:if="${timelinetype} == 'private'">Meine Timeline</h1>
                     <hr/>
 
                     <!-- dynamischer POST! -->
@@ -132,12 +132,14 @@
                         <div class="media-left">
                             <img th:src="${post.user.imageUrl}" alt="profile-pic"
                                  class="media-object" style="width:80px"/>
+                            <span class="badge">folgen?</span>
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <a th:text="@{'/timeline/' + ${post.user.username}}"/>
+                                <a th:href="@{/dashboard} + '/' + ${post.user.username}"
+                                   th:text="${post.user.username}"/>
                                 <small>
-                                    <i th:text="${post.timestamp}">&nbsp;&nbsp;&nbsp;</i>
+                                    <i th:text="${#dates.format(post.timestamp, 'dd MMM yyyy HH:mm')}">&nbsp;&nbsp;&nbsp;</i>
                                 </small>
                             </h4>
                             <p/>
@@ -147,7 +149,7 @@
                     <!-- ENDE dynamischer POST! -->
 
                     <!-- Statisches Beispiel -->
-                    <div class="media">
+                    <!--<div class="media">
                         <div class="media-left">
                             <img th:src="@{/image/p1.jpg}" class="media-object" style="width:80px"/>
                             <span class="badge">folgen?</span>
@@ -158,7 +160,7 @@
                             </h4>
                             <p>ForkbombForkbombForkbombForkbomb<br/>ForkbombForkbombForkbombForkbomb</p>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- ENDE Statisches Beispiel ENDE -->
 
                     <hr/>

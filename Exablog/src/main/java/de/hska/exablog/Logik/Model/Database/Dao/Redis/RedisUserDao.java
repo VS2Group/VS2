@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,6 +38,27 @@ public class RedisUserDao implements IUserDao {
 				.setLastName(database.getUserDataOps().get(key, "lastname"))
 				.setImageUrl(database.getUserDataOps().get(key, "imageurl"))
 				.build();
+	}
+
+	@Override
+	public List<User> searchForUsers(String searchTerm) {
+		Set<String> users = database.getAllUsersOps().members(RedisConfig.KEY_FOR_ALL_USERS);
+
+		List<User> usersFound = new ArrayList<>();
+
+		for (String user : users) {
+			String username = user.split(":")[1];
+
+			if (username.contains(searchTerm)) {
+				try {
+					usersFound.add(getUserByName(username));
+				} catch (UserDoesNotExistException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return usersFound;
 	}
 
 	@Override
@@ -118,15 +137,36 @@ public class RedisUserDao implements IUserDao {
 	}
 
 	@Override
-	public Collection<User> getFollowed(User user) {
+	public Collection<User> getFollowings(User user) {
 		String key = user.getUsername() + ":following";
 		return extractUsers(database.getUserFollowedOps().members(key));
 	}
 
 	@Override
-	public Iterable<User> getFollowers(User user) {
+	public Collection<User> getFollowers(User user) {
 		String key = user.getUsername() + ":follower";
 		return extractUsers(database.getUserFollowersOps().members(key));
+	}
+
+	@Override
+	public boolean isFollowing(User from, User to) {
+		return this.getFollowings(from).contains(to);
+	}
+
+	@Override
+	public void follow(User from, User to) {
+		if (!this.getFollowings(from).contains(to)) {
+			database.getUserFollowersOps().add(to.getUsername() + ":follower", from.getUsername());
+			database.getUserFollowedOps().add(from.getUsername() + ":following", to.getUsername());
+		}
+	}
+
+	@Override
+	public void unfollow(User from, User to) {
+		if (this.getFollowings(from).contains(to)) {
+			database.getUserFollowersOps().remove(to.getUsername() + ":follower", from.getUsername());
+			database.getUserFollowedOps().remove(from.getUsername() + ":following", to.getUsername());
+		}
 	}
 
 	private Set<User> extractUsers(Set<String> userNames) {
@@ -141,17 +181,5 @@ public class RedisUserDao implements IUserDao {
 		return users;
 	}
 
-	@Override
-	public boolean toggleFollowing(User follower, User following) {
-		if (getFollowed(follower).contains(following)) {
-			database.getUserFollowersOps().remove(following.getUsername() + ":follower", follower.getUsername());
-			database.getUserFollowedOps().remove(follower.getUsername() + ":following", following.getUsername());
-			return false;
-		} else {
-			database.getUserFollowersOps().add(following.getUsername() + ":follower", follower.getUsername());
-			database.getUserFollowedOps().add(follower.getUsername() + ":following", following.getUsername());
-			return true;
-		}
-	}
 
 }

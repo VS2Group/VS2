@@ -21,8 +21,4 @@ public class PostService {
 		return postDao.createPost(user, content);
 	}
 
-	public void deletePost(long postID) {
-		postDao.deletePost(postID);
-	}
-
 }

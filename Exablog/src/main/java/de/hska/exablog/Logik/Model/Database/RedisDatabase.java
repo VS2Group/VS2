@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RedisDatabase {
 
+	private final ListOperations<String, String> sortedPostsOps;
+
 	private HashOperations<String, String, String> userDataOps;
 	private SetOperations<String, String> allUsersOps;
 	private ZSetOperations<String, String> allUsersSortedOps;
@@ -37,11 +39,16 @@ public class RedisDatabase {
 		allUsersOps = stringTemplate.opsForSet();
 		allUsersSortedOps = stringTemplate.opsForZSet();
 		postDataOps = stringTemplate.opsForHash();
+		registeredLoginsOps = stringTemplate.opsForHash();
+
+		allUsersOps = stringTemplate.opsForSet();
 		userPostsOps = stringTemplate.opsForSet();
 		latestPostsOps = stringTemplate.opsForSet();
 		userFollowersOps = stringTemplate.opsForSet();
 		userFollowedOps = stringTemplate.opsForSet();
-		registeredLoginsOps = stringTemplate.opsForHash();
+
+		sortedPostsOps = stringTemplate.opsForList();
+
 		currentLoginsOps = stringTemplate.opsForValue();
 		sessionUserOps = stringTemplate.opsForValue();
 
@@ -99,5 +106,9 @@ public class RedisDatabase {
 
 	public ZSetOperations<String, String> getAllUsersSortedOps() {
 		return allUsersSortedOps;
+	}
+
+	public ListOperations<String, String> getSortedPostsOps() {
+		return sortedPostsOps;
 	}
 }
