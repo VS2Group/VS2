@@ -18,6 +18,7 @@ public class RedisConfig {
 	private final static String SERVER_PASSWORT = "";
 
 	public final static String KEY_FOR_ALL_USERS = "all_users";
+	public final static String KEY_FOR_SORTED_USERS = "all_users_sorted";
 	public final static String KEY_FOR_LATEST_POSTS = "latest_post_ids";
 	public final static int TIMELINE_LIMIT = 10;
 	public final static long SESSION_TIMEOUT_MINUTES = 30;

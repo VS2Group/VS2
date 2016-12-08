@@ -15,6 +15,7 @@ public class RedisDatabase {
 
 	private HashOperations<String, String, String> userDataOps;
 	private SetOperations<String, String> allUsersOps;
+	private ZSetOperations<String, String> allUsersSortedOps;
 
 	private ValueOperations<String, String> sessionUserOps;
 
@@ -35,6 +36,8 @@ public class RedisDatabase {
 	public RedisDatabase(StringRedisTemplate stringTemplate) {
 		stringRedisTemplate = stringTemplate;
 		userDataOps = stringTemplate.opsForHash();
+		allUsersOps = stringTemplate.opsForSet();
+		allUsersSortedOps = stringTemplate.opsForZSet();
 		postDataOps = stringTemplate.opsForHash();
 		registeredLoginsOps = stringTemplate.opsForHash();
 
@@ -99,6 +102,10 @@ public class RedisDatabase {
 
 	public ValueOperations<String, String> getSessionUserOps() {
 		return sessionUserOps;
+	}
+
+	public ZSetOperations<String, String> getAllUsersSortedOps() {
+		return allUsersSortedOps;
 	}
 
 	public ListOperations<String, String> getSortedPostsOps() {

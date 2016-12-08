@@ -19,4 +19,5 @@ h1{
 }
 #nav{
 	background-color:rgba(0, 0, 0, 0.5);
+	border: rgba(0, 0, 0, 0.5);
 }
