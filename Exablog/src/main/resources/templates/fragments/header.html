@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- ====================================================== -->
+<!-- thymeleaf Status = fertig -->
+<!-- Kommentar:
+       • Keine Navi Links gemacht
+       • "Statisches Beispiel" nicht versuchen in Spring MVC zu implementeiern
+       • dynamischer POST! mit thymeleaf versehen ! Kommt in MVC!
+       • Brauchen für jeden User auch ein Profilbild!
+       • user - user beziehung .....folge ich dem user? Für FOLGEN und ENTFOLGEN kein thymeleaf weiss nicht wie das in MVC aussieht!
+       •NEUER NAchricht keine Errorhandling !
+-->
+<!-- thymeleaf
+      th:action="@{/suchenutzer}"
+      th:object="${string}"
+      th:name="searchterm"
+
+   => NEUE NACHRICHT <=
+      <form class="form-group" th:action="@{/create-post}" th:object="${message}" method="post" onsubmit="sendContent();" >
+      th:field="*{content}"
+
+   => dynamischer POST! <=
+      th:each="post : ${posts}"
+      th:src="'/static/image/' + ${post.profilePicturePath}"
+      <a th:href="'./timeline/' + ${post.userName}">
+      <i th:text="${post.date}">&nbsp;&nbsp;&nbsp;</i>
+      <p>th:text="${post.content}"></p>
+-->
+<!-- ====================================================== -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <title>ExaBlog</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/exablog.css}" rel="stylesheet" media="screen"/>
+
+</head>
+
+
+<body>
+
+<!-- Nav START-->
+<nav th:fragment="header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color:#222;">
+                <img class="img-circle img-responsive" th:src="@{${user.imageUrl}}" width="100px" height="auto"
+                     style="border:6px solid #222;"/>
+                <!-- Fehler bei Smartphone Displaygröße-->
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+
+            <ul class="nav navbar-nav ">
+                <!-- <li class="active"><a href="#">Dash</a></li> -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Timelines <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/timeline/personal}">Meine Timeline</a></li>
+                        <li><a th:href="@{/timeline}">ExaBlog Timeline</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Follow<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/followings}">ich folge</a></li>
+                        <li><a th:href="@{/followers}">mir folgen</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <form class="navbar-form navbar-right" th:action="@{/search}" th:object="${string}">
+                <div class="form-group">
+                    <input type="text" th:name="searchterm" class="form-control input-sm"
+                           placeholder="Suche nach Nutzern"/>
+                </div>
+                <button type="submit" class="btn btn-default btn-sm">Suche</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Abmelden</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Nav END-->
+</body>
+</html>
