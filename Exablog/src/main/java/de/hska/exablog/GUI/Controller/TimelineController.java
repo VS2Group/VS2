@@ -30,6 +30,8 @@ public class TimelineController {
 	private TimelineService timelineService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private FollowController followController;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getGlobalTimeline(HttpSession session, Model model) {
@@ -60,5 +62,15 @@ public class TimelineController {
 		model.addAttribute("timeline", personalTimeline);
 
 		return "timeline";
+	}
+
+	@RequestMapping(value = "/follow/{username}", method = RequestMethod.GET)
+	public String getFollow(@PathVariable("username") String username, HttpSession session, Model model) {
+		return followController.getFollow("/timeline", username, session, model);
+	}
+
+	@RequestMapping(value = "/unfollow/{username}", method = RequestMethod.GET)
+	public String getUnfollow(@PathVariable("username") String username, HttpSession session, Model model) {
+		return followController.getUnfollow("/timeline", username, session, model);
 	}
 }

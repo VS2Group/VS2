@@ -6,6 +6,7 @@ import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.IUserDao;
 import de.hska.exablog.Logik.Model.Database.RedisDatabase;
 import de.hska.exablog.Logik.Model.Entity.User;
+import de.hska.exablog.Logik.Model.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,8 @@ public class RedisUserDao implements IUserDao {
 
 	@Autowired
 	private RedisDatabase database;
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public User getUserByName(String username) throws UserDoesNotExistException {
@@ -37,6 +40,7 @@ public class RedisUserDao implements IUserDao {
 				.setFirstName(database.getUserDataOps().get(key, "firstname"))
 				.setLastName(database.getUserDataOps().get(key, "lastname"))
 				.setImageUrl(database.getUserDataOps().get(key, "imageurl"))
+				.setUserService(userService)
 				.build();
 	}
 
@@ -49,7 +53,7 @@ public class RedisUserDao implements IUserDao {
 		for (String user : users) {
 			String username = user.split(":")[1];
 
-			if (username.contains(searchTerm)) {
+			if (username.toLowerCase().contains(searchTerm.toLowerCase())) {
 				try {
 					usersFound.add(getUserByName(username));
 				} catch (UserDoesNotExistException e) {
@@ -133,6 +137,7 @@ public class RedisUserDao implements IUserDao {
 				.setLastName(user.getLastName())
 				.setPassword(user.getPassword())
 				.setImageUrl(user.getImageUrl())
+				.setUserService(userService)
 				.build();
 	}
 
@@ -155,7 +160,10 @@ public class RedisUserDao implements IUserDao {
 
 	@Override
 	public void follow(User from, User to) {
-		if (!this.getFollowings(from).contains(to)) {
+		Collection<User> followings = this.getFollowings(from);
+		boolean containsTo = followings.contains(to);
+
+		if (!containsTo) {
 			database.getUserFollowersOps().add(to.getUsername() + ":follower", from.getUsername());
 			database.getUserFollowedOps().add(from.getUsername() + ":following", to.getUsername());
 		}

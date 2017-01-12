@@ -12,13 +12,16 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/topic"); // für jeden Benutzer eine Warteschlange
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/hello").withSockJS();
+        registry.addEndpoint("/hello").withSockJS(); // für jede Funktionalität eine Warteschlange
+        //registry.addEndpoint("/hello").withSockJS();
+        //registry.addEndpoint("/hello").withSockJS();
+        //registry.addEndpoint("/hello").withSockJS();
     }
 
 }

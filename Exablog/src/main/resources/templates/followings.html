@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <title>ExaBlog</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            background: url(image/logback.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 60px;
+            background-color: #222;
+        }
+    </style>
+</head>
+
+
+<body>
+
+<!-- Nav START-->
+<div th:replace="@{/fragments/header} :: 'header'"/>
+<!-- Nav END-->
+
+
+<br/><br/><br/><br/><br/><br/><br/>
+<div class="container-fluid">
+    <div class="row" style="margin:10px 10px 10px 10px;">
+
+        <div th:replace="fragments/post :: neuer-post"/>
+
+
+        <div class="col-sm-8 col-md-8 col-lg-10">
+            <div class="col-md-12" style="background-color:white; opacity:0.8;">
+                <div class="col-md-12">
+                    <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <th:block th:text="'Suche &bdquo;' + ${searchterm} + '&ldquo;'"/>
+                    </h1>
+                    <hr/>
+
+                    <div class="row">
+
+                        <div class="col-md-3" th:each="result : ${results}">
+                            <div th:replace="fragments/searchresult :: searchresult"/>
+                        </div>
+
+                        <br/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap-JavaScript
+================================================== -->
+<!-- Am Ende des Dokuments platziert, damit Seiten schneller laden -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10-Anzeigefenster-Hack für Fehler auf Surface und Desktop-Windows-8 -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
