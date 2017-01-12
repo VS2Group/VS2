@@ -64,7 +64,12 @@
     <div class="media-left">
         <img th:src="${post.user.imageUrl}" alt="profile-pic"
              class="media-object" style="width:80px"/>
-        <span class="badge">folgen?</span>
+        <a th:href="@{${#httpServletRequest.requestURI} + '/follow/'} +${post.user.username}"
+           th:if="${user} != null and ${user.canFollow(post.user)}" class="badge" style="background:#3299CC;"
+           aria-label="Folgen">folgen</a>
+        <a th:href="@{${#httpServletRequest.requestURI} + '/unfollow/'} +${post.user.username}"
+           th:if="${user} != null and ${user.canUnfollow(post.user)}" class="badge" style="background:#3299CC;"
+           aria-label="Entfolgen">entfolgen</a>
     </div>
     <div class="media-body">
         <h4 class="media-heading">
