@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Angelo on 03.12.2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Post {
+public class Post implements Comparable<Post> {
 	private long postID;
 	private String content;
 	private User user;
@@ -23,6 +23,26 @@ public class Post {
 
 	public static Builder getBuilder() {
 		return new Builder();
+	}
+
+	@Override
+	public int hashCode() {
+		return Long.hashCode(postID);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Post)) {
+			return false;
+		}
+
+		Post that = (Post) obj;
+		return this.postID == that.postID;
+	}
+
+	@Override
+	public int compareTo(Post that) {
+		return Long.compare(this.postID, that.postID);
 	}
 
 	public long getPostID() {
@@ -60,6 +80,7 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 
 	public static class Builder {
 		private long postID = -1;

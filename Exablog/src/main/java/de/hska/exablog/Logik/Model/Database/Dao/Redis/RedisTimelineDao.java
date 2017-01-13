@@ -66,7 +66,10 @@ public class RedisTimelineDao implements ITimelineDao {
 		postIdList.sort(new StringComparatorByContainedLong());
 		Timeline personalTimeline = new Timeline();
 
-		for (String postId : postIdList) {
+		// Count backwards and stop at timeline limit or zero
+		for (int i = postIdList.size() - 1, count = 0; i >= 0 && count < RedisConfig.TIMELINE_LIMIT; i--, count++) {
+			String postId = postIdList.get(i);
+
 			if (personalTimeline.getPosts().size() >= RedisConfig.TIMELINE_LIMIT) {
 				break;
 			}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -64,13 +65,5 @@ public class TimelineController {
 		return "timeline";
 	}
 
-	@RequestMapping(value = "/follow/{username}", method = RequestMethod.GET)
-	public String getFollow(@PathVariable("username") String username, HttpSession session, Model model) {
-		return followController.getFollow("/timeline", username, session, model);
-	}
 
-	@RequestMapping(value = "/unfollow/{username}", method = RequestMethod.GET)
-	public String getUnfollow(@PathVariable("username") String username, HttpSession session, Model model) {
-		return followController.getUnfollow("/timeline", username, session, model);
-	}
 }

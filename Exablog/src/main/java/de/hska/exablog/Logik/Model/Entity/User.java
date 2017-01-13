@@ -95,11 +95,11 @@ public class User {
 	}
 
 	public boolean canFollow(User user) {
-		return !userService.isFollowing(this, user);
+		return !this.equals(user) && !userService.isFollowing(this, user);
 	}
 
 	public boolean canUnfollow(User user) {
-		return !canFollow(user);
+		return !this.equals(user) && userService.isFollowing(this, user);
 	}
 
 	static public class Builder {

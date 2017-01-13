@@ -31,7 +31,10 @@ public class RedisPostDao implements IPostDao {
 
 		// Create entry in post-table
 		String postKey = "post:" + postID;
+		String userPostsKey = user.getUsername() + ":posts";
+
 		database.getPostDataOps().put(postKey, "id", Long.toString(postID));
+		database.getUserPostsOps().add(userPostsKey, Long.toString(postID)); //Add to user:posts
 		database.getPostDataOps().put(postKey, "content", content);
 		database.getPostDataOps().put(postKey, "username", user.getUsername());
 		database.getPostDataOps().put(postKey, "timestamp", Long.toString(timestamp));
