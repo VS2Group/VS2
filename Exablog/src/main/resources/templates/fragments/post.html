@@ -64,19 +64,19 @@
     <div class="media-left">
         <img th:src="${post.user.imageUrl}" alt="profile-pic"
              class="media-object" style="width:80px"/>
-        <a th:href="@{${#httpServletRequest.requestURI} + '/follow/'} +${post.user.username}"
+        <a th:href="@{|/follow/${post.user.username}/?source=${#httpServletRequest.requestURI}|}"
            th:if="${user} != null and ${user.canFollow(post.user)}" class="badge" style="background:#3299CC;"
            aria-label="Folgen">folgen</a>
-        <a th:href="@{${#httpServletRequest.requestURI} + '/unfollow/'} +${post.user.username}"
+        <a th:href="@{|/unfollow/${post.user.username}/?source=${#httpServletRequest.requestURI}|}"
            th:if="${user} != null and ${user.canUnfollow(post.user)}" class="badge" style="background:#3299CC;"
            aria-label="Entfolgen">entfolgen</a>
     </div>
     <div class="media-body">
         <h4 class="media-heading">
-            <a th:href="@{/dashboard} + '/' + ${post.user.username}"
+            <a th:href="@{|/dashboard/${post.user.username}|}"
                th:text="${post.user.username}">Forkbomb</a>
             <small>
-                <i th:text="${#dates.format(post.timestamp, 'dd.MM.yyyy, HH:mm')}">20.10.2016, 15:40</i>
+                <i th:text="${#dates.format(post.timestamp, 'dd.MM.yyyy, HH:mm:ss')}">20.10.2016, 15:40:12</i>
             </small>
         </h4>
         <p/>

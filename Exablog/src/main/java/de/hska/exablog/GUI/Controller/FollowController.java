@@ -7,9 +7,7 @@ import de.hska.exablog.Logik.Model.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,10 +23,10 @@ public class FollowController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/{source}/follow/{username}/", method = RequestMethod.GET)
-	public String getFollow(@PathVariable("source") String source, @PathVariable("username") String username, HttpSession session, Model model) {
+	@RequestMapping(value = {"/follow/{username}/", "/follow/{username}"}, method = RequestMethod.GET)
+	public String follow(@RequestParam(value = "source", required = false) String sourceOrNull, @PathVariable("username") String username, HttpSession session) {
 		User user = sessionService.validateSession(session.getId());
-		if (user == null) {    // User ist nicht eingeloggt
+		if (user == null) {    // User ist eingeloggt
 			return "redirect:/login";
 		}
 
@@ -39,13 +37,22 @@ public class FollowController {
 			e.printStackTrace();
 		}
 
-		return "redirect:" + source;
+
+		if (sourceOrNull != null) {
+			while (sourceOrNull.startsWith("/")) {
+				sourceOrNull = sourceOrNull.substring(1, sourceOrNull.length());
+			}
+
+			return "redirect:/" + sourceOrNull;
+		} else {
+			return "redirect:/";
+		}
 	}
 
-	@RequestMapping(value = "{source}/unfollow/{username}/", method = RequestMethod.GET)
-	public String getUnfollow(@PathVariable("source") String source, @PathVariable("username") String username, HttpSession session, Model model) {
+	@RequestMapping(value = {"/unfollow/{username}/", "/unfollow/{username}"}, method = RequestMethod.GET)
+	public String unfollow(@RequestParam(value = "source", required = false) String sourceOrNull, @PathVariable("username") String username, HttpSession session) {
 		User user = sessionService.validateSession(session.getId());
-		if (user == null) {    // User ist nicht eingeloggt
+		if (user == null) {    // User ist eingeloggt
 			return "redirect:/login";
 		}
 
@@ -56,7 +63,16 @@ public class FollowController {
 			e.printStackTrace();
 		}
 
-		return "redirect:" + source;
+
+		if (sourceOrNull != null) {
+			while (sourceOrNull.startsWith("/")) {
+				sourceOrNull = sourceOrNull.substring(1, sourceOrNull.length());
+			}
+
+			return "redirect:/" + sourceOrNull;
+		} else {
+			return "redirect:/";
+		}
 	}
 
 	@RequestMapping(value = "/followings", method = RequestMethod.GET)

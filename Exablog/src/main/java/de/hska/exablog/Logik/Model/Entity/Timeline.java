@@ -8,11 +8,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Timeline {
 
-	private ArrayList<Post> posts = new ArrayList<>();
+	private List<Post> posts = new ArrayList<>();
 
 	public Timeline() {
 	}
@@ -21,7 +22,7 @@ public class Timeline {
 		this.posts.addAll(posts);
 	}
 
-	public ArrayList<Post> getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
 

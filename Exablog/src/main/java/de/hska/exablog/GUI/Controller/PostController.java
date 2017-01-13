@@ -1,7 +1,5 @@
 package de.hska.exablog.GUI.Controller;
 
-import de.hska.exablog.GUI.Controller.Data.Greeting;
-import de.hska.exablog.GUI.Controller.Data.Message;
 import de.hska.exablog.GUI.Controller.Data.PostData;
 import de.hska.exablog.Logik.Model.Entity.Post;
 import de.hska.exablog.Logik.Model.Entity.User;
