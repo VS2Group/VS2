@@ -1,5 +1,6 @@
 package de.hska.exablog.GUI.Controller;
 
+import com.sun.istack.internal.Nullable;
 import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Entity.User;
 import de.hska.exablog.Logik.Model.Service.SessionService;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Angelo on 08.12.2016.
@@ -22,6 +24,19 @@ public class FollowController {
 
 	@Autowired
 	private UserService userService;
+
+	@NotNull
+	private String getFollowRedirect(@Nullable String sourceOrNull) {
+		if (sourceOrNull != null) {
+			while (sourceOrNull.startsWith("/")) {
+				sourceOrNull = sourceOrNull.substring(1, sourceOrNull.length());
+			}
+
+			return "redirect:/" + sourceOrNull;
+		} else {
+			return "redirect:/";
+		}
+	}
 
 	@RequestMapping(value = {"/follow/{username}/", "/follow/{username}"}, method = RequestMethod.GET)
 	public String follow(@RequestParam(value = "source", required = false) String sourceOrNull, @PathVariable("username") String username, HttpSession session) {
@@ -38,15 +53,7 @@ public class FollowController {
 		}
 
 
-		if (sourceOrNull != null) {
-			while (sourceOrNull.startsWith("/")) {
-				sourceOrNull = sourceOrNull.substring(1, sourceOrNull.length());
-			}
-
-			return "redirect:/" + sourceOrNull;
-		} else {
-			return "redirect:/";
-		}
+		return getFollowRedirect(sourceOrNull);
 	}
 
 	@RequestMapping(value = {"/unfollow/{username}/", "/unfollow/{username}"}, method = RequestMethod.GET)
@@ -64,15 +71,7 @@ public class FollowController {
 		}
 
 
-		if (sourceOrNull != null) {
-			while (sourceOrNull.startsWith("/")) {
-				sourceOrNull = sourceOrNull.substring(1, sourceOrNull.length());
-			}
-
-			return "redirect:/" + sourceOrNull;
-		} else {
-			return "redirect:/";
-		}
+		return getFollowRedirect(sourceOrNull);
 	}
 
 	@RequestMapping(value = "/followings", method = RequestMethod.GET)
