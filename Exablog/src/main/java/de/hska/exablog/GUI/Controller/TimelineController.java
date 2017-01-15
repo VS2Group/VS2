@@ -41,6 +41,7 @@ public class TimelineController {
 			return "redirect:/login";
 		}
 
+		model.addAttribute("_session", session);
 		model.addAttribute("timelinetype", "global");
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("user", user);
@@ -56,6 +57,7 @@ public class TimelineController {
 			return "redirect:/login";
 		}
 
+		model.addAttribute("_session", session);
 		model.addAttribute("timelinetype", "private");
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("user", thisUser);
