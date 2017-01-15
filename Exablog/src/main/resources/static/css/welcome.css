@@ -17,6 +17,9 @@ h1{
 #title-login{
 	color: white;
 }
+#error-alert{
+	color: white;
+}
 #nav{
 	background-color:rgba(0, 0, 0, 0.5);
 	border: rgba(0, 0, 0, 0.5);

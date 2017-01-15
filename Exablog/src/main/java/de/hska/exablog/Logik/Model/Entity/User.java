@@ -19,6 +19,7 @@ public class User implements Comparable<User>{
 	private String firstName;
 	private String lastName;
 	private String imageUrl;
+	private String confirmPassword;
 
 	User(String username, String password, String firstName, String lastName, String imageUrl, UserService userService) {
 		this.username = username;
@@ -93,6 +94,10 @@ public class User implements Comparable<User>{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword;}
+
+	public String getConfirmPassword() { return confirmPassword; }
 
 	public boolean canFollow(User user) {
 		return !this.equals(user) && !userService.isFollowing(this, user);

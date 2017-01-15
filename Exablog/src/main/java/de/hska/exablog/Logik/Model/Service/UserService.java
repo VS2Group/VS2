@@ -61,7 +61,7 @@ public class UserService {
 	}
 
 	public User insertUser(@NotNull User user) throws UserAlreadyExistsException, UsernameIllegalWhitespaceException,
-			UsernameTooShortException, PasswordTooShortException {
+			UsernameTooShortException, PasswordTooShortException, PasswordsDontMatchException {
 
 		// Username normalisieren
 		user.setUsername(user.getUsername().trim());
@@ -82,6 +82,9 @@ public class UserService {
 			throw new PasswordTooShortException();
 		}
 
+		if (!(user.getPassword().equals(user.getConfirmPassword()))){
+			throw new PasswordsDontMatchException();
+		}
 
 		try {
 			getUserByName(user.getUsername());

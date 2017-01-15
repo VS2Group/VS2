@@ -8,9 +8,7 @@ import de.hska.exablog.Logik.Model.Entity.User;
  */
 public class RegisterData {
 	private ErrorState errorState = ErrorState.NO_ERROR;
-	private User user = User.getBuilder()
-			.setImageUrl(RandomProfilePicture.getRandomFile())
-			.build();
+	private User user = User.getBuilder().build();
 	private boolean submitted = false;
 
 	public ErrorState getErrorState() {
@@ -42,7 +40,8 @@ public class RegisterData {
 		ERROR_USERNAME_IN_USE,
 		ERROR_USERNAME_ILLEGAL_WHITESPACE,
 		ERROR_USERNAME_TOO_SHORT,
-		ERROR_PASSWORD_TOO_SHORT;
+		ERROR_PASSWORD_TOO_SHORT,
+		ERROR_PASSWORDS_DONT_MATCH;
 
 		public String toString() {
 			switch (this) {
@@ -56,6 +55,8 @@ public class RegisterData {
 					return "Fehler: Der Benutzername ist zu kurz. Mindestens 3 Zeichen.";
 				case ERROR_PASSWORD_TOO_SHORT:
 					return "Fehler: Das Passwort ist zu kurz. Mindestens 3 Zeichen.";
+				case ERROR_PASSWORDS_DONT_MATCH:
+					return "Fehler: Die Passworte stimmen nicht überein";
 			}
 
 			return "Unbekannter Fehler.";
