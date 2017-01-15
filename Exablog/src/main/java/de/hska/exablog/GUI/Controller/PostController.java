@@ -1,11 +1,12 @@
 package de.hska.exablog.GUI.Controller;
 
 import de.hska.exablog.GUI.Controller.Data.PostData;
+import de.hska.exablog.GUI.Controller.Stomp.Incoming.NewPostRequest;
+import de.hska.exablog.GUI.Controller.Stomp.Outgoing.NewPostReply;
 import de.hska.exablog.Logik.Model.Entity.Post;
 import de.hska.exablog.Logik.Model.Entity.User;
 import de.hska.exablog.Logik.Model.Service.PostService;
 import de.hska.exablog.Logik.Model.Service.SessionService;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -60,9 +61,5 @@ public class PostController {
 		return "redirect:/timeline";
 	}
 
-	/*@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
-	public Greeting greeting(Message message) throws Exception {
-		return new Greeting("Hello, " + message.getContent() + "!");
-	}*/
+
 }

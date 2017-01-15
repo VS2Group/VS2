@@ -36,10 +36,14 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <link th:href="@{/css/exablog.css}" rel="stylesheet" media="screen"/>
 
+    <script th:src="@{/js/sockjs-1.0.0.min.js}"></script>
+    <script th:src="@{/js/stomp.min.js}"></script>
+    <script th:src="@{/scripts/hello-client.js}"></script>
 </head>
+<body onload="disconnect(); connect();">
 
-
-<body>
+<!--/*@thymesVar id="_session" type="javax.servlet.http.HttpSession"*/-->
+<div id="sessionId" style="visibility: hidden" th:text="${_session.getId()}"></div>
 
 <!-- Nav START-->
 <div th:replace="@{/fragments/header} :: 'header'"/>
@@ -58,13 +62,17 @@
         <div class="col-sm-8 col-md-8 col-lg-10">
             <div class="col-md-12" style="background-color:white; opacity:0.8;">
                 <div class="col-md-12">
+                    <!--/*@thymesVar id="timelinetype" type="java.lang.String"*/-->
                     <h1 th:if="${timelinetype} == 'global'">Exablog Timeline</h1>
                     <h1 th:if="${timelinetype} == 'private'">Meine Timeline</h1>
                     <hr/>
 
                     <!-- dynamischer POST! -->
-                    <div class="media post thumbnail" th:each="post : ${timeline.posts}">
-                        <div th:replace="@{/fragments/post} :: 'post'"/>
+                    <!--/*@thymesVar id="timeline" type="de.hska.exablog.Logik.Model.Entity.Timeline"*/-->
+                    <div id="post-stream">
+                        <div class="media post thumbnail" th:each="post : ${timeline.posts}">
+                            <div th:replace="@{/fragments/post} :: 'post'"/>
+                        </div>
                     </div>
                     <!-- ENDE dynamischer POST! -->
 

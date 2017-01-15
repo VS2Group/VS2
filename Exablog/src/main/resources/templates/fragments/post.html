@@ -6,7 +6,7 @@
        • "Statisches Beispiel" nicht versuchen in Spring MVC zu implementeiern 
        • dynamischer POST! mit thymeleaf versehen ! Kommt in MVC! 
        • Brauchen für jeden User auch ein Profilbild!
-       • user - user beziehung .....folge ich dem user? Für FOLGEN und ENTFOLGEN kein thymeleaf weiss nicht wie das in MVC aussieht! 
+       • user - user beziehung .....folge ich dem user? Für FOLGEN und ENTFOLGEN kein thymeleaf weiss nicht wie das in MVC aussieht!
        •NEUER NAchricht keine Errorhandling ! 
 -->
 <!-- thymeleaf 
@@ -46,10 +46,12 @@
         <h2>neue Nachricht</h2>
         <hr/>
 
-        <form class="form-group" th:action="@{/posts}" th:object="${postData}" method="post"
-              onsubmit="sendContent();">
-            <label for="comment"></label>
-            <textarea class="form-control" rows="5" th:field="*{post.content}" id="comment"
+        <!--/*@thymesVar id="postData" type="de.hska.exablog.GUI.Controller.Data.PostData"*/-->
+        <form class="form-group"
+              onsubmit="return sendNewPostRequest();">
+            <label for="post-content"></label>
+            <!--/*@thymesVar id="post" type="de.hska.exablog.Logik.Model.Entity.Post"*/-->
+            <textarea class="form-control" rows="5" id="post-content"
                       maxlength="140"></textarea>
             <br/>
             <button type="submit" class="btn-success btn-block btn-lg">posten</button>
@@ -61,9 +63,13 @@
 <!-- ENDE Neuer Post dynamisch -->
 
 <div th:fragment="post">
+    <!--/*@thymesVar id="post" type="de.hska.exablog.Logik.Model.Entity.Post"*/-->
+    <!--/*@thymesVar id="sessionId" type="de.hska.exablog.Logik.Model.Entity.User"*/-->
+    <!--/*@thymesVar id="user" type="de.hska.exablog.Logik.Model.Entity.User"*/-->
     <div class="media-left">
         <img th:src="${post.user.imageUrl}" alt="profile-pic"
              class="media-object" style="width:80px"/>
+
         <a th:href="@{|/follow/${post.user.username}/?source=${#httpServletRequest.requestURI}|}"
            th:if="${user} != null and ${user.canFollow(post.user)}" class="badge" style="background:#3299CC;"
            aria-label="Folgen">folgen</a>
@@ -82,21 +88,6 @@
         <p/>
         <p th:text="${post.content}">Das ist Content.</p>
     </div>
-
-    <!-- Statisches Beispiel -->
-    <!--<div class="media">
-        <div class="media-left">
-            <img th:src="@{/image/p1.jpg}" class="media-object" style="width:80px"/>
-            <span class="badge">folgen?</span>
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading">Forkbomb
-                <small><i>&nbsp;&nbsp;&nbsp;20.10.2016, 15:40</i></small>
-            </h4>
-            <p>ForkbombForkbombForkbombForkbomb<br/>ForkbombForkbombForkbombForkbomb</p>
-        </div>
-    </div>-->
-    <!-- ENDE Statisches Beispiel ENDE -->
 </div>
 </body>
 </html>
