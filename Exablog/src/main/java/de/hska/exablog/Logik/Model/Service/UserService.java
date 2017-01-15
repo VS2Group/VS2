@@ -1,6 +1,7 @@
 package de.hska.exablog.Logik.Model.Service;
 
 import de.hska.exablog.Logik.Exception.*;
+import de.hska.exablog.Logik.Model.Database.Dao.IQueryDao;
 import de.hska.exablog.Logik.Model.Database.Dao.IUserDao;
 import de.hska.exablog.Logik.Model.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Angelo on 04.12.2016.
@@ -21,6 +20,10 @@ public class UserService {
 	@Autowired
 	@Qualifier("RedisDatabase")
 	private IUserDao userDao;
+
+	@Autowired
+	@Qualifier("RedisDatabase")
+	private IQueryDao queryDao;
 
 	private static String escapeHTML(String s) {
 		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
@@ -109,7 +112,7 @@ public class UserService {
 		return userDao.isFollowing(from, to);
 	}
 
-	public List<User> searchForUsers(String username) {
-		return userDao.searchForUsers(username);
+	public Collection<User> searchForUsers(String username) {
+		return queryDao.doSearch(username);
 	}
 }

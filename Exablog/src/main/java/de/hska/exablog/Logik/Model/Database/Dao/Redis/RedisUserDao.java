@@ -78,7 +78,7 @@ public class RedisUserDao implements IUserDao {
 		database.getUserDataOps().delete(userKey, "username", "firstname", "lastname", "imageurl");
 
 		String loginKey = "login:" + username;
-		database.getRegisteredLoginsOps().delete(loginKey, "password"); // TODO: encrypt password
+		database.getRegisteredLoginsOps().delete(loginKey, "password");
 
 		String simpleLoginTokenKey = "session:" + username;
 
@@ -101,7 +101,7 @@ public class RedisUserDao implements IUserDao {
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
-		database.getUserDataOps().put(userKey, "password", user.getPassword());
+		database.getUserDataOps().put(userKey, "password", user.getPassword()); // TODO: encrypt password
 		database.getUserDataOps().put(userKey, "imageurl", user.getImageUrl());
 
 		String simpleLoginTokenKey = "session:" + user.getUsername();
@@ -123,7 +123,7 @@ public class RedisUserDao implements IUserDao {
 		database.getUserDataOps().put(userKey, "username", user.getUsername());
 		database.getUserDataOps().put(userKey, "firstname", user.getFirstName());
 		database.getUserDataOps().put(userKey, "lastname", user.getLastName());
-		database.getUserDataOps().put(userKey, "password", user.getPassword());
+		database.getUserDataOps().put(userKey, "password", user.getPassword()); // TODO: encrypt password
 		database.getUserDataOps().put(userKey, "imageurl", user.getImageUrl());
 
 		String simpleLoginTokenKey = "session:" + user.getUsername();
