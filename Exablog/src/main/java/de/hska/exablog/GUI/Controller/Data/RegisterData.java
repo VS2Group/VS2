@@ -8,7 +8,9 @@ import de.hska.exablog.Logik.Model.Entity.User;
  */
 public class RegisterData {
 	private ErrorState errorState = ErrorState.NO_ERROR;
-	private User user = User.getBuilder().build();
+	private User user = User.getBuilder()
+			.setImageUrl(RandomProfilePicture.getRandomFile())
+			.build();
 	private boolean submitted = false;
 
 	public ErrorState getErrorState() {
