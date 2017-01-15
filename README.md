@@ -15,6 +15,10 @@ Als Team von vier Informatik-Studenten entwickeln wir einen Twitter-Klon, der ge
     git branch login-handler
     git checkout login-handler
 ```
+Oder in 1 Shell-Command:
+```
+    git checkout -b login-handler
+```
 3\. Pushe ein paar Änderungen in deinen Branch.
 ```
     git add src/x.java
