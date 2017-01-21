@@ -27,6 +27,7 @@ public class RedisQueryDao implements IQueryDao {
 
 	@Override
 	public Iterable<User> doSearch(String query) {
+		query = "username:" + query;
 		RedisZSetCommands.Range range = RedisZSetCommands.Range.range().gte(query).lt(this.nextUpper(query));
 		Set<String> foundUsers = database.getAllUsersSortedOps().rangeByLex(RedisConfig.KEY_FOR_SORTED_USERS, range);
 		Set<User> result = new HashSet<>();
@@ -44,7 +45,7 @@ public class RedisQueryDao implements IQueryDao {
 		return result;
 	}
 
-	private String nextUpper(String original) { // relies on String Javadoc correctness ;-)
+	private String nextUpper(String original) {
 		String nextString = original.substring(0, original.length() - 1); // entire String except last character
 		nextString += original.charAt(original.length() - 1) + 1; // append successor of original last character
 		return nextString;
