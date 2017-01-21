@@ -1,5 +1,6 @@
 package de.hska.exablog.Logik.Model.Database;
 
+import de.hska.exablog.Logik.Config.RedisConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
@@ -22,6 +23,7 @@ public class RedisDatabase {
 	private HashOperations<String, String, String> postDataOps;
 	private SetOperations<String, String> userPostsOps;
 	private SetOperations<String, String> latestPostsOps;
+	private SetOperations<String, String> newPostSubscribersOps;
 
 	private SetOperations<String, String> userFollowersOps;
 	private SetOperations<String, String> userFollowedOps;
@@ -34,7 +36,11 @@ public class RedisDatabase {
 
 	@Autowired
 	public RedisDatabase(StringRedisTemplate stringTemplate) {
+		//StringRedisTemplate stringTemplate = RedisConfig.getStringRedisTemplate();
+
+		//stringRedisTemplate = RedisConfig.getStringRedisTemplate();
 		stringRedisTemplate = stringTemplate;
+
 		userDataOps = stringTemplate.opsForHash();
 		allUsersOps = stringTemplate.opsForSet();
 		allUsersSortedOps = stringTemplate.opsForZSet();
@@ -52,12 +58,18 @@ public class RedisDatabase {
 		currentLoginsOps = stringTemplate.opsForValue();
 		sessionUserOps = stringTemplate.opsForValue();
 
+		newPostSubscribersOps = stringTemplate.opsForSet();
+
 		this.postIDOps = new RedisAtomicLong("postid", stringTemplate.getConnectionFactory());
 	}
 
 
 	public HashOperations<String, String, String> getUserDataOps() {
 		return userDataOps;
+	}
+
+	public SetOperations<String, String> getNewPostSubscribersOps() {
+		return newPostSubscribersOps;
 	}
 
 	public SetOperations<String, String> getAllUsersOps() {

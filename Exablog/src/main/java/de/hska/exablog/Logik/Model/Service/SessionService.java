@@ -34,4 +34,8 @@ public class SessionService {
 	public void removeSession(String sessionId) {
 		sessionDao.removeSession(sessionId);
 	}
+
+	public User validateOnlySession(String sessionId) {
+		return sessionDao.validateOnlySession(sessionId);
+	}
 }

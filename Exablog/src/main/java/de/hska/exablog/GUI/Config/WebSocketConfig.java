@@ -10,14 +10,22 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
+	static private StompEndpointRegistry stompEndpointRegistry;
+
+	public static StompEndpointRegistry getStompEndpointRegistry() {
+		return stompEndpointRegistry;
+	}
+
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic"); // für jeden Benutzer eine Warteschlange
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+		stompEndpointRegistry = registry;
+
 		registry.addEndpoint("/mysocket").withSockJS(); // Für initiale Verbindung
 		registry.addEndpoint("/stomp/new-post-request").withSockJS(); // für jede Funktionalität eine Warteschlange
 		registry.addEndpoint("/stomp/search-attempt").withSockJS();

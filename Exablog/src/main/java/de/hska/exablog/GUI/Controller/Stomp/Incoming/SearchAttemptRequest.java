@@ -6,6 +6,9 @@ package de.hska.exablog.GUI.Controller.Stomp.Incoming;
 public class SearchAttemptRequest {
 	private String searchString;
 
+	public SearchAttemptRequest() {
+	}
+
 	public SearchAttemptRequest(String searchString) {
 		this.searchString = searchString;
 	}
