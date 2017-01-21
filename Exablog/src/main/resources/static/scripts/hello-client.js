@@ -1,11 +1,43 @@
 var stompClient = null;
+
+function receiveNewPostReply(newPostReply) {
+    console.log("Got new post reply");
+    var reply = JSON.parse(newPostReply.body);
+
+    addPostToTop(reply.post);
+}
+
+function registerForNewPostsRequest() {
+    stompClient.send("/app/stomp/register-for-new-posts", {}, JSON.stringify({
+        'sessionId': getSessionId()
+    }));
+    console.log("Connected with /app/stomp/register-for-new-posts");
+}
+
+function registerForNewPostsReply(registerForNewPostsReply) {
+    console.log("Got register for new posts reply");
+    var reply = JSON.parse(registerForNewPostsReply.body);
+
+}
+
+
+function newPostAvailable(newPostsAvailableNotification) {
+    console.log("Got new post available notification")
+    var notification = JSON.parse(newPostsAvailableNotification.body);
+
+    alert("New posts available. Reload page.");
+}
+
 function connect() {
     var socket = new SockJS('/mysocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
 //        setConnected(true);
         console.log('Connected:	' + frame);
-        stompClient.subscribe('/topic/posts/new-post-reply', receiveNewPostReply);
+        stompClient.subscribe('/topic/posts/new-post-reply:' + getSessionId(), receiveNewPostReply);
+        stompClient.subscribe('/topic/posts/registerfornewposts-reply:' + getSessionId(), registerForNewPostsReply);
+        stompClient.subscribe('/topic/posts/newposts:' + getSessionId(), newPostAvailable);
+        registerForNewPostsRequest();
     });
 }
 
@@ -61,11 +93,7 @@ function getPostTemplate(username, imageUrl, content, timestamp) {
 }
 
 
-function receiveNewPostReply(newPostReply) {
-    var reply = JSON.parse(newPostReply.body);
 
-    addPostToTop(reply.post);
-}
 
 function addPostToTop(post) {
     var username = post.user.username;

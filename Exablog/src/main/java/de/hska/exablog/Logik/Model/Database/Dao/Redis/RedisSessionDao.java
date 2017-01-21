@@ -1,6 +1,7 @@
 package de.hska.exablog.Logik.Model.Database.Dao.Redis;
 
 import de.hska.exablog.Logik.Config.RedisConfig;
+import de.hska.exablog.Logik.Exception.SessionIsNotValid;
 import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
 import de.hska.exablog.Logik.Model.Database.Dao.ISessionDao;
 import de.hska.exablog.Logik.Model.Database.RedisDatabase;
@@ -28,20 +29,16 @@ public class RedisSessionDao implements ISessionDao {
 
 	@Override
 	public User validateSession(String sessionId) {
-		String simpleLoginTokenKey = "session:" + sessionId;
-
-
-		String username = database.getSessionUserOps().get(simpleLoginTokenKey);
-		if (username == null) {
-			return null;
-		}
-
 		try {
+			User user = validateOnlySession(sessionId);
+			if (user == null) {
+				throw new SessionIsNotValid();
+			}
+
 			// reset session timeout
-			User user = userService.getUserByName(username);
 			registerSession(sessionId, user);
 			return user;
-		} catch (UserDoesNotExistException e) {
+		} catch (UserDoesNotExistException | SessionIsNotValid e) {
 			return null;
 		}
 	}
@@ -63,4 +60,23 @@ public class RedisSessionDao implements ISessionDao {
 
 		database.getSessionUserOps().getOperations().delete(key);
 	}
+
+	@Override
+	public User validateOnlySession(String sessionId) {
+		String simpleLoginTokenKey = "session:" + sessionId;
+
+
+		String username = database.getSessionUserOps().get(simpleLoginTokenKey);
+		if (username == null) {
+			return null;
+		}
+
+		try {
+			User user = userService.getUserByName(username);
+			return user;
+		} catch (UserDoesNotExistException e) {
+			return null;
+		}
+	}
+
 }

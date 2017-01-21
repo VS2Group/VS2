@@ -13,4 +13,6 @@ public interface ISessionDao {
 	Session registerSession(String sessionId, User user) throws UserDoesNotExistException;
 
 	void removeSession(String sessionId);
+
+	User validateOnlySession(String sessionId);
 }

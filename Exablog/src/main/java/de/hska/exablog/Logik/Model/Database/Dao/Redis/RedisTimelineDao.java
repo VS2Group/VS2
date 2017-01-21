@@ -90,6 +90,21 @@ public class RedisTimelineDao implements ITimelineDao {
 		return personalTimeline;
 	}
 
+	@Override
+	public void addNewPostsSubscriber(String sessionId) {
+		database.getNewPostSubscribersOps().add("newpostsubscribers", sessionId);
+	}
+
+	@Override
+	public void removeNewPostsSubscriber(String sessionId) {
+		database.getNewPostSubscribersOps().remove("newpostsubscribers", sessionId);
+	}
+
+	@Override
+	public Collection<String> getNewPostsSubcribers() {
+		return database.getNewPostSubscribersOps().members("newpostsubscribers"); // TODO
+	}
+
 	private Set<String> getUserPostIds(User user) {
 		String key = user.getUsername() + ":posts";
 		return database.getUserPostsOps().members(key);
