@@ -2,15 +2,15 @@
 <!-- ====================================================== -->
 <!-- thymeleaf Status = fertig -->
 <!-- Kommentar: 
-        •es fehlt: "benutzername gibts schon" Handling 
-        •Von Button Registrieren zu -> login.html (link einbauen)
-        • Wir haben kein Passwort Repeat
+        •es fehlt: "benutzername gibts schon" Handling
+
 -->
-<!-- thymeleaf  
-        th:action="@{/registrieren}" 
-        th:object="${userRegister}" 
-        th:field="*{username}"  
-        th:field="*{password}"  
+<!-- thymeleaf
+        th:action="@{/registrieren}"
+        th:object="${userRegister}"
+        th:field="*{username}"
+        th:field="*{password}"
+        th:field="*{confirmPassword}"
 -->
 <!-- ====================================================== -->
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
@@ -53,7 +53,7 @@
                     <div class="panel-body">
                         <h2 id="title-login">Registrieren</h2>
                         <form action="#" th:action="@{/register}" th:object="${registerData}" method="POST">
-                            <div th:unless="${registerData.errorState} eq ''"
+                            <div id="error-alert" th:unless="${registerData.errorState} eq ''"
                                  th:text="${registerData.errorState}"></div>
                             <div class="form-group">
                                 <input type="text" th:field="*{user.username}" class="form-control"
@@ -62,6 +62,10 @@
                             <div class="form-group">
                                 <input type="password" th:field="*{user.password}" class="form-control"
                                        placeholder="Passwort" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" th:field="*{user.confirmPassword}" class="form-control"
+                                       placeholder="Confirm Passwort" required="true"/>
                             </div>
                             <input th:field="*{submitted}" name="submitted" type="hidden" value="true"/>
                             <button type="submit" class="btn btn-default">Registrieren</button>

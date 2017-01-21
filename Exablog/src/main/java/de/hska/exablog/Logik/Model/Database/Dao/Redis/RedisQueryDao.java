@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by root on 07.12.2016.
@@ -26,11 +27,11 @@ public class RedisQueryDao implements IQueryDao {
 	private UserService userService;
 
 	@Override
-	public Iterable<User> doSearch(String query) {
+  public Collection<User> doSearch(String query) {
 		query = "username:" + query;
 		RedisZSetCommands.Range range = RedisZSetCommands.Range.range().gte(query).lt(this.nextUpper(query));
 		Set<String> foundUsers = database.getAllUsersSortedOps().rangeByLex(RedisConfig.KEY_FOR_SORTED_USERS, range);
-		Set<User> result = new HashSet<>();
+		Set<User> result = new TreeSet<>();
 		for (String username : foundUsers) {
 			String userKey = "user:" + username;
 			result.add(User.getBuilder()

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Angelo on 07.12.2016.
@@ -41,7 +41,7 @@ public class SearchController {
 			return "searchresults";
 		}
 
-		List<User> users = userService.searchForUsers(searchterm);
+		Collection<User> users = userService.searchForUsers(searchterm);
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("results", users);
 		model.addAttribute("user", user);

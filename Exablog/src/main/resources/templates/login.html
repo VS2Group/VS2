@@ -52,7 +52,7 @@
                         <h2 id="title-login">Login</h2>
 
                         <form action="#" th:action="@{/login}" th:object="${loginData}" method="post">
-                            <div th:unless="${loginData.errorState} eq ''" th:text="${loginData.errorState}"></div>
+                            <div id="error-alert" th:unless="${loginData.errorState} eq ''" th:text="${loginData.errorState}"></div>
                             <div class="form-group">
                                 <input type="text" th:field="*{user.username}" class="form-control"
                                        placeholder="Benutzername" required="required" autofocus="autofocus"/>

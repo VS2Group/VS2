@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * Created by Angelo on 03.12.2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class User implements Comparable<User>{
 
 	private UserService userService;
 
@@ -19,6 +19,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String imageUrl;
+	private String confirmPassword;
 
 	User(String username, String password, String firstName, String lastName, String imageUrl, UserService userService) {
 		this.username = username;
@@ -94,12 +95,21 @@ public class User {
 		this.password = password;
 	}
 
+	public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword;}
+
+	public String getConfirmPassword() { return confirmPassword; }
+
 	public boolean canFollow(User user) {
 		return !this.equals(user) && !userService.isFollowing(this, user);
 	}
 
 	public boolean canUnfollow(User user) {
 		return !this.equals(user) && userService.isFollowing(this, user);
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return this.username.compareTo(o.username);
 	}
 
 	static public class Builder {

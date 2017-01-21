@@ -1,12 +1,8 @@
 package de.hska.exablog.GUI.Controller;
 
 import de.hska.exablog.GUI.Controller.Data.RegisterData;
-import de.hska.exablog.Logik.Exception.UserAlreadyExistsException;
-import de.hska.exablog.Logik.Exception.UserDoesNotExistException;
-import de.hska.exablog.Logik.Exception.UsernameIllegalWhitespaceException;
-import de.hska.exablog.Logik.Exception.UsernameTooShortException;
+import de.hska.exablog.Logik.Exception.*;
 import de.hska.exablog.Logik.Model.Entity.User;
-import de.hska.exablog.Logik.Exception.PasswordTooShortException;
 import de.hska.exablog.Logik.Model.Service.SessionService;
 import de.hska.exablog.Logik.Model.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,14 +71,16 @@ public class RegisterController {
 				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_ILLEGAL_WHITESPACE);
 			} catch (PasswordTooShortException e) {
 				registerData.setErrorState(RegisterData.ErrorState.ERROR_PASSWORD_TOO_SHORT);
+			} catch (PasswordsDontMatchException e) {
+				registerData.setErrorState(RegisterData.ErrorState.ERROR_PASSWORDS_DONT_MATCH);
 			} catch (UsernameTooShortException e) {
 				registerData.setErrorState(RegisterData.ErrorState.ERROR_USERNAME_TOO_SHORT);
 			} catch (UserDoesNotExistException e) {
 				throw new RuntimeException("An unexpected error occurred", e);
 			}
 		}
+
 		return "register";
 	}
-
 
 }
