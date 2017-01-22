@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 /**
  * Created by Angelo on 08.12.2016.
@@ -81,8 +82,11 @@ public class FollowController {
 			return "redirect:/login";
 		}
 
-		model.addAttribute("followings", userService.getFollowings(user));
 
+		Collection<User> users = userService.getFollowings(user);
+		model.addAttribute("_session", session);
+		model.addAttribute("results", users);
+		model.addAttribute("user", user);
 		return "followings";
 	}
 
@@ -93,7 +97,10 @@ public class FollowController {
 			return "redirect:/login";
 		}
 
-		model.addAttribute("followers", userService.getFollowers(user));
+		Collection<User> users = userService.getFollowers(user);
+		model.addAttribute("_session", session);
+		model.addAttribute("results", users);
+		model.addAttribute("user", user);
 
 		return "followers";
 	}

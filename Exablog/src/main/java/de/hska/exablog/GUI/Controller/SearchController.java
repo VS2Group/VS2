@@ -42,6 +42,7 @@ public class SearchController {
 		}
 
 		Collection<User> users = userService.searchForUsers(searchterm);
+		model.addAttribute("_session", session);
 		model.addAttribute("postData", new PostData());
 		model.addAttribute("results", users);
 		model.addAttribute("user", user);

@@ -6,29 +6,13 @@
     <title>ExaBlog</title>
     <meta name="generator" content="Bootply"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-
-    <style>
-        body {
-            background: url(image/logback.png) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        footer {
-            position: absolute;
-            bottom: 0px;
-            width: 100%;
-            height: 60px;
-            background-color: #222;
-        }
-    </style>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/exablog.css}" rel="stylesheet" media="screen"/>
 </head>
 
 
 <body>
+
 <div th:fragment="searchresult">
     <!--/*@thymesVar id="result" type="de.hska.exablog.Logik.Model.Entity.User"*/-->
     <div class="col-md-12"></div>
@@ -37,7 +21,12 @@
     </div>
     <div class="media-body">
         <h4 class="media-heading" th:text="${result.username}">Faby</h4>
-        <span class="badge">folgen?</span>
+        <a th:href="@{|/follow/${result.username}/?source=${#httpServletRequest.requestURI}|}"
+           th:if="${user} != null and ${user.canFollow(result)}" class="badge" style="background:#3299CC;"
+           aria-label="Folgen">folgen</a>
+        <a th:href="@{|/unfollow/${result.username}/?source=${#httpServletRequest.requestURI}|}"
+           th:if="${user} != null and ${user.canUnfollow(result)}" class="badge" style="background:#3299CC;"
+           aria-label="Entfolgen">entfolgen</a>
     </div>
 
 </div>

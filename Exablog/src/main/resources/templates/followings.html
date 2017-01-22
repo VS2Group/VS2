@@ -6,29 +6,15 @@
     <title>ExaBlog</title>
     <meta name="generator" content="Bootply"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-
-    <style>
-        body {
-            background: url(image/logback.png) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        footer {
-            position: absolute;
-            bottom: 0px;
-            width: 100%;
-            height: 60px;
-            background-color: #222;
-        }
-    </style>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/exablog.css}" rel="stylesheet" media="screen"/>
 </head>
 
 
-<body>
+<body onload="disconnect(); connect();">
+
+<!--/*@thymesVar id="_session" type="javax.servlet.http.HttpSession"*/-->
+<div id="sessionId" style="visibility: hidden" th:text="${_session.getId()}"></div>
 
 <!-- Nav START-->
 <div th:replace="@{/fragments/header} :: 'header'"/>
@@ -45,13 +31,11 @@
         <div class="col-sm-8 col-md-8 col-lg-10">
             <div class="col-md-12" style="background-color:white; opacity:0.8;">
                 <div class="col-md-12">
-                    <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <th:block th:text="'Suche &bdquo;' + ${searchterm} + '&ldquo;'"/>
-                    </h1>
+                    <h1><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ich folge</h1>
                     <hr/>
-
                     <div class="row">
 
+                        <!--/*@thymesVar id="results" type="java.util.List<de.hska.exablog.Logik.Model.Entity.User>"*/-->
                         <div class="col-md-3" th:each="result : ${results}">
                             <div th:replace="fragments/searchresult :: searchresult"/>
                         </div>
