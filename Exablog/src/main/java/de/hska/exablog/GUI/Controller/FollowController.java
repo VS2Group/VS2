@@ -34,10 +34,12 @@ public class FollowController {
 			}
 
 			return "redirect:/" + sourceOrNull;
+
 		} else {
 			return "redirect:/";
 		}
 	}
+	//@ModelAttribute("searchterm") String searchterm,
 
 	@RequestMapping(value = {"/follow/{username}/", "/follow/{username}"}, method = RequestMethod.GET)
 	public String follow(@RequestParam(value = "source", required = false) String sourceOrNull, @PathVariable("username") String username, HttpSession session) {
@@ -54,8 +56,10 @@ public class FollowController {
 		}
 
 
+
 		return getFollowRedirect(sourceOrNull);
 	}
+
 
 	@RequestMapping(value = {"/unfollow/{username}/", "/unfollow/{username}"}, method = RequestMethod.GET)
 	public String unfollow(@RequestParam(value = "source", required = false) String sourceOrNull, @PathVariable("username") String username, HttpSession session) {
@@ -74,6 +78,7 @@ public class FollowController {
 
 		return getFollowRedirect(sourceOrNull);
 	}
+
 
 	@RequestMapping(value = "/followings", method = RequestMethod.GET)
 	public String getFollowings(HttpSession session, Model model) {
