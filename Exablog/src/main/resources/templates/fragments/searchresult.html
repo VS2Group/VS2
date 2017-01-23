@@ -20,13 +20,18 @@
         <img th:src="${result.imageUrl}" class="media-object" style="width:100px"/>
     </div>
     <div class="media-body">
-        <h4 class="media-heading" th:text="${result.username}">Faby</h4>
+
+        <h4 class="media-heading">
+            <a th:href="@{|/timeline/dashboard/${result.username}|}"
+               th:text="${result.username}">Forkbomb</a>
+
         <a th:href="@{|/follow/${result.username}/?source=${#httpServletRequest.requestURI}%3Fsearchterm=${searchterm}|}"
            th:if="${user} != null and ${user.canFollow(result)}" class="badge" style="background:#3299CC;"
            aria-label="Folgen">folgen</a>
         <a th:href="@{|/unfollow/${result.username}/?source=${#httpServletRequest.requestURI}%3Fsearchterm=${searchterm}|}"
            th:if="${user} != null and ${user.canUnfollow(result)}" class="badge" style="background:#3299CC;"
            aria-label="Entfolgen">entfolgen</a>
+        </h4>
     </div>
 
 </div>

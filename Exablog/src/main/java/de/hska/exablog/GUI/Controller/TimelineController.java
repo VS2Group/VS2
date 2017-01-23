@@ -66,6 +66,25 @@ public class TimelineController {
 
 		return "timeline";
 	}
+	@RequestMapping(value = {"/dashboard/{username}/", "/dashboard/{username}"}, method = RequestMethod.GET)
+	public String getPersonalDashboard(@PathVariable("username") String username, HttpSession session, Model model) throws UserDoesNotExistException {
+		User thisUser = sessionService.validateSession(session.getId());
+		if (thisUser == null) {    // User ist eingeloggt
+			return "redirect:/login";
+		}
+		User dashboardUser = userService.getUserByName(username);
+		model.addAttribute("_session", session);
+		model.addAttribute("timelinetype", "dashboard");
+		model.addAttribute("postData", new PostData());
+		model.addAttribute("username", dashboardUser.getUsername());
+		model.addAttribute("user", thisUser);
+
+		//Hier muss noch geändert werden
+		Timeline personalTimeline = timelineService.getPersonalTimeline(dashboardUser, 0);
+		model.addAttribute("timeline", personalTimeline);
+
+		return "timeline";
+	}
 
 
 }

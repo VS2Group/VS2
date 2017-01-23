@@ -65,6 +65,7 @@
                     <!--/*@thymesVar id="timelinetype" type="java.lang.String"*/-->
                     <h1 th:if="${timelinetype} == 'global'">Exablog Timeline</h1>
                     <h1 th:if="${timelinetype} == 'private'">Meine Timeline</h1>
+                    <h1 th:if="${timelinetype} == 'dashboard'"><th:block th:text= "''+${username}+'&rsquo;'+'s Dashboard'"/></h1>
                     <hr/>
 
                     <!-- dynamischer POST! -->

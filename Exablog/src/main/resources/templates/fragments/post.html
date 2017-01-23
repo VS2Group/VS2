@@ -79,7 +79,7 @@
     </div>
     <div class="media-body">
         <h4 class="media-heading">
-            <a th:href="@{|/dashboard/${post.user.username}|}"
+            <a th:href="@{|/timeline/dashboard/${post.user.username}|}"
                th:text="${post.user.username}">Forkbomb</a>
             <small>
                 <i th:text="${#dates.format(post.timestamp, 'dd.MM.yyyy, HH:mm:ss')}">20.10.2016, 15:40:12</i>
