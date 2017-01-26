@@ -12,9 +12,13 @@ public interface ITimelineDao {
 	Timeline getGlobalTimeline(long start, long end);
 	Timeline getPersonalTimeline(User user, long start, long end);
 
+	Timeline getDashboardTimeline(User user, long start, long end);
+
 	void addNewPostsSubscriber(String sessionId);
 
 	void removeNewPostsSubscriber(String sessionId);
 
 	Collection<String> getNewPostsSubcribers();
+
+
 }

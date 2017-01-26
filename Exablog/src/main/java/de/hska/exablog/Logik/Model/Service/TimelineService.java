@@ -23,11 +23,28 @@ public class TimelineService {
 	private ITimelineDao timelineDao;
 
 	public Timeline getGlobalTimeline(long start) {
-		return timelineDao.getGlobalTimeline(start, start + RedisConfig.TIMELINE_LIMIT);
+		return this.getGlobalTimeline(start, start + RedisConfig.TIMELINE_LIMIT);
 	}
 
+	public Timeline getGlobalTimeline(long start, long end) {
+		return timelineDao.getGlobalTimeline(start, end);
+	}
+
+
 	public Timeline getPersonalTimeline(User user, long start) {
-		return timelineDao.getPersonalTimeline(user, start, start + RedisConfig.TIMELINE_LIMIT);
+		return this.getPersonalTimeline(user, start, start + RedisConfig.TIMELINE_LIMIT);
+	}
+
+	public Timeline getPersonalTimeline(User user, long start, long end) {
+		return timelineDao.getPersonalTimeline(user, start, end);
+	}
+
+	public Timeline getDashboardTimeline(User user, long start) {
+		return this.getDashboardTimeline(user, start, start + RedisConfig.TIMELINE_LIMIT);
+	}
+
+	public Timeline getDashboardTimeline(User user, long start, long end) {
+		return timelineDao.getDashboardTimeline(user, start, end);
 	}
 
 	public void addNewPostsSubscriber(String sessionId) {
@@ -45,7 +62,5 @@ public class TimelineService {
 		return timelineDao.getNewPostsSubcribers();
 	}
 
-	public Timeline getGlobalTimeline(long start, long end) {
-		return timelineDao.getGlobalTimeline(start, end);
-	}
+
 }

@@ -36,7 +36,7 @@ public class Receiver {
 
 	public void receiveMessage(String message) {
 		LOGGER.info(String.format("Received <%s>", message));
-		long lastUpdate = Long.parseLong(message.split(";")[0]);
+		//long lastUpdate = Long.parseLong(message.split(";")[0]);
 		int anzahl = Integer.parseInt(message.split(";")[1]);
 
 		List<Post> postsSinceLastUpdate = timelineService.getGlobalTimeline(0, anzahl - 1).getPosts();

@@ -91,6 +91,39 @@ public class RedisTimelineDao implements ITimelineDao {
 	}
 
 	@Override
+	public Timeline getDashboardTimeline(User user, long start, long end) {
+		Set<String> postIds = this.getUserPostIds(user);
+		List<String> postIdList = new ArrayList<>();
+		postIdList.addAll(postIds);
+		postIdList.sort(new StringComparatorByContainedLong());
+
+		Timeline dashboardTimeline = new Timeline();
+
+		// Count backwards and stop at timeline limit or zero
+		for (int i = postIdList.size() - 1, count = 0; i >= 0 && count < RedisConfig.TIMELINE_LIMIT; i--, count++) {
+			String postId = postIdList.get(i);
+
+			if (dashboardTimeline.getPosts().size() >= RedisConfig.TIMELINE_LIMIT) {
+				break;
+			}
+
+			String postKey = "post:" + postId;
+			try {
+				dashboardTimeline.getPosts().add(Post.getBuilder()
+						.setPostID(Long.parseLong(postId))
+						.setUser(userService.getUserByName(database.getPostDataOps().get(postKey, "username")))
+						.setContent(database.getPostDataOps().get(postKey, "content"))
+						.setTimestamp(new Date(Long.parseLong(database.getPostDataOps().get(postKey, "timestamp"))))
+						.build());
+			} catch (UserDoesNotExistException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return dashboardTimeline;
+	}
+
+	@Override
 	public void addNewPostsSubscriber(String sessionId) {
 		database.getNewPostSubscribersOps().add("newpostsubscribers", sessionId);
 	}

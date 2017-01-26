@@ -55,7 +55,9 @@
     <div class="row" style="margin:10px 10px 10px 10px;">
 
         <!-- Neuer Post dynamisch -->
-        <div th:replace="@{/fragments/post} :: 'neuer-post'"/>
+        <div th:if="${timelinetype} != 'dashboard'">
+            <div th:replace="@{/fragments/post} :: 'neuer-post'"/>
+        </div>
         <!-- ENDE Neuer Post dynamisch -->
 
 

@@ -31,8 +31,6 @@ public class TimelineController {
 	private TimelineService timelineService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private FollowController followController;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getGlobalTimeline(HttpSession session, Model model) {
@@ -80,7 +78,7 @@ public class TimelineController {
 		model.addAttribute("user", thisUser);
 
 		//Hier muss noch geändert werden
-		Timeline personalTimeline = timelineService.getPersonalTimeline(dashboardUser, 0);
+		Timeline personalTimeline = timelineService.getDashboardTimeline(dashboardUser, 0);
 		model.addAttribute("timeline", personalTimeline);
 
 		return "timeline";
